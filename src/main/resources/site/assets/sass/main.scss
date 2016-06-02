@@ -2,3 +2,14 @@
 @import 'header';
 @import 'drawer';
 @import 'product-list';
+.payup-toggle-cart-button {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  z-index: 1000;
+  &.active {
+    i {
+      color: black;
+    }
+  }
+}

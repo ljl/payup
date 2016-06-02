@@ -7,25 +7,30 @@ exports = {
 }
 
 function getCustomer() {
-  log.info("**** CUSTOMER LIB ****");
+  log.info("*** customerLib.getCustomer()");
   var user = authLib.getUser().key;
+  var customer = fetchCustomer();
+
+  if (!customer) {
+    return createCustomer(user);
+  }
+  return customer;
+};
+
+function fetchCustomer(userKey) {
   var customerResult = contentLib.query({
-    query: "data.userKey = '" + user + "'",
+    query: "data.userKey = '" + userKey + "'",
     contentTypes: [
       'no.iskald.payup.store:customer'
     ],
   });
-  log.info(JSON.stringify(customerResult, null, 2));
-  if (customerResult.count == 0) {
-    log.info("Customer doesnt exists, creating new from user");
-    return createCustomer(user);
-  }
+  log.info("FetchCustomer(" + userKey + ")" + JSON.stringify(customerResult, null, 2));
   return customerResult.hits[0];
-};
+}
 
 function createCustomer(userKey) {
   var site = portalLib.getSite();
-  var result1 = contentLib.create({
+  var createCustomerResult = contentLib.create({
     name: 'customer-' + userKey,
     parentPath: site._path + '/customers',
     displayName: 'customer-' + userKey,
@@ -34,4 +39,6 @@ function createCustomer(userKey) {
       userKey: userKey
     }
   });
+  log.info("CreateCustomer(" + userKey + ")" + JSON.stringify(createCustomerResult, null, 2));
+  return createCustomerResult;
 }

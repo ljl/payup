@@ -1,5 +1,6 @@
 var contentLib = require('/lib/xp/content');
 var customerLib = require('customerLib');
+var portal = require('/lib/xp/portal');
 var contentUtil = __.newBean("no.iskald.payup.ContentUtil");
 var cartUtil = __.newBean("no.iskald.payup.CartUtil");
 
@@ -26,13 +27,16 @@ function getCart() {
 }
 
 function addToCartQuantity(quantity, productId) {
+  log.info("*** ADD TO CART ***");
+  var site = portal.getSite();
   var cart = getCart();
+  log.info(JSON.stringify(cart, null, 2));
   if (!cart) {
     // TODO: separate method
     var customer = customerLib.getCustomer();
     cart = contentLib.create({
       name: customer.displayName + ' cart',
-      parentPath: '/',
+      parentPath: site._path + '/shopping-carts',
       displayName: customer.displayName + ' cart',
       branch: 'draft',
       contentType: 'no.iskald.payup.store:cart',

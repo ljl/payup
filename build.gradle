@@ -55,7 +55,7 @@ uploadArchives {
 
 // Frontend build setup
 node {
-    version = '5.0.0'
+    version = '5.11.0'
     download = true
 }
 
