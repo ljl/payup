@@ -30,6 +30,9 @@ function handleGet(req) {
     //TODO: extract method
     var items = [];
     if (cart && cart.data.items) {
+      if (!Array.isArray(cart.data.items)) {
+        cart.data.items = [cart.data.items];
+      }
       cart.data.items.forEach(function (item) {
         log.info(item.product);
         var product = contentLib.get({

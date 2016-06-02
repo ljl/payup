@@ -1,0 +1,17 @@
+{
+  "name": "payup",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "build": "./gradlew build",
+    "deploy": "./gradlew deploy",
+    "watch": "./gradlew deploy -t"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.1",
+    "gulp-sourcemaps": "^1.6.0"
+  }
+}

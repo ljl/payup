@@ -1,21 +1,22 @@
+
 buildscript {
     repositories {
         mavenLocal()
+        mavenCentral()
         jcenter()
-        maven {
-            url 'http://repo.enonic.com/public'
-        }
+        maven { url 'http://repo.enonic.com/public' }
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
 
     dependencies {
         classpath "com.enonic.xp:gradle-plugin:${xpVersion}"
+        classpath 'com.moowork.gradle:gradle-gulp-plugin:0.11'
     }
 }
 
 apply plugin: 'maven'
 apply plugin: 'com.enonic.xp.app'
-
-
+apply plugin: 'com.moowork.gulp'
 
 app {
     name = project.appName
@@ -38,7 +39,7 @@ dependencies {
 
 repositories {
     mavenLocal()
-    mavenCentral()
+    jcenter()
     maven {
         url 'http://repo.enonic.com/public'
     }
@@ -51,3 +52,24 @@ uploadArchives {
         }
     }
 }
+
+// Frontend build setup
+node {
+    version = '5.0.0'
+    download = true
+}
+
+gulp {
+    // Set the directory where gulpfile.js should be found
+    workDir = file("${project.projectDir}")
+
+    // Whether colors should output on the terminal
+    colors = true
+}
+
+// processes your package.json before running gulp build
+gulp_build.dependsOn 'npmInstall'
+
+// runs "gulp build" as part of your gradle build
+build.dependsOn gulp_build
+build.mustRunAfter gulp_build
