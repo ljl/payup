@@ -1,0 +1,10 @@
+<h2>Shopping cart</h2>
+<div th:if="${cart != null}">
+    <h3 th:text="${cart.displayName}">Cart name</h3>
+    <ul>
+        <li th:each="product : ${products}">
+            <span th:text="${product.displayName}">Product</span>
+            <a href="#" th:href="${product.removeFromCart}">Remove product</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,22 @@
+<part>
+  <display-name>PayUp! Stripe</display-name>
+  <config>
+    <field-set name="things">
+      <label>Order</label>
+      <items>
+        <input type="TextLine" name="description">
+          <label>Description</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="ContentSelector" name="item">
+          <label>Items to purchase</label>
+          <occurrences minimum="1" maximum="0"/>
+          <config>
+            <relationship-type>system:reference</relationship-type>
+            <allow-content-type>no.iskald.stripexp:purchasable</allow-content-type>
+          </config>
+        </input>
+      </items>
+    </field-set>
+  </config>
+</part>

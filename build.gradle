@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            url 'http://repo.enonic.com/public'
+        }
+    }
+
+    dependencies {
+        classpath "com.enonic.xp:gradle-plugin:${xpVersion}"
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'com.enonic.xp.app'
+
+
+
+app {
+    name = project.appName
+    displayName = project.displayName
+    vendorName = 'Enonic USA'
+    vendorUrl = 'https://enonic.com'
+}
+
+dependencies {
+    compile "com.enonic.xp:core-api:${xpVersion}"
+    compile "com.enonic.xp:portal-api:${xpVersion}"
+    include "com.enonic.xp:lib-content:${xpVersion}"
+    include "com.enonic.xp:lib-portal:${xpVersion}"
+    include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
+    include "com.enonic.xp:lib-xslt:${xpVersion}"
+    include "com.enonic.xp:lib-auth:${xpVersion}"
+    include "com.enonic.xp:lib-context:${xpVersion}"
+    include "com.stripe:stripe-java:2.5.0"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'http://repo.enonic.com/public'
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository( url: 'http://repo.enonic.com/artifactory/public' )
+        }
+    }
+}

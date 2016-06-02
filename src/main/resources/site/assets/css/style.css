@@ -1,0 +1,111 @@
+body main {
+  max-width:661px;
+  margin: 0 auto;
+}
+
+.payup-header {
+  color: white;
+}
+
+.payup-header h1 {
+  text-shadow: 1px 1px 1px #333;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.payup-drawer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 240px;
+  height: 100%;
+  max-height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  box-sizing: border-box;
+  border-right: 1px solid #e0e0e0;
+  background: #fafafa;
+  -webkit-transform: translateX(250px);
+  transform: translateX(250px);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-property: transform;
+  transition-property: transform,-webkit-transform;
+  color: #424242;
+  overflow: visible;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.payup-drawer.active {
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+.payup-drawer .title {
+  line-height: 64px;
+  padding-left: 40px;
+}
+
+.payup-drawer nav {
+  -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    -ms-grid-row-align: stretch;
+    align-items: stretch;
+    padding-top: 16px;
+}
+
+.payup-drawer nav a {
+  display: block;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  padding: 16px 40px;
+  margin: 0;
+  color: #757575;
+}
+
+.payup-toggle-cart-button i {
+  color: white;
+}
+
+.payup-header .mdl-layout__drawer-button  {
+  color:white;
+}
+
+.payup-header header {
+  display:block !important;
+  height:300px;
+}
+
+.product-list .products {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.product-list .product {
+  width:320px;
+  height: 320px;
+  margin-right:20px;
+  margin-bottom:20px;
+}
+
+.product-list .product:nth-child(2n) {
+  margin-right:0;
+}
+
+.product-list .product h2 {
+  color: white;
+  width:100%;
+  text-shadow: 1px 1px 1px #333;
+  display:flex;
+  justify-content: space-between;
+}

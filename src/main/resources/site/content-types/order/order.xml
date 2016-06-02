@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type>
+  <display-name>Order</display-name>
+  <super-type>base:structured</super-type>
+  <allow-child-content>true</allow-child-content>
+  <form>
+    <input type="TextLine" name="id">
+      <label>id</label>
+      <occurrences minimum="1" maximum="1"/>
+    </input>
+    <input type="ContentSelector" name="customer">
+      <label>Customer</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <relationship>system:reference</relationship>
+        <allowType>no.iskald.payup.store:customer</allowType>
+      </config>
+    </input>
+    <input type="ContentSelector" name="products">
+      <label>Products</label>
+      <occurrences minimum="0" maximum="0"/>
+      <config>
+        <relationship>system:reference</relationship>
+        <allowType>no.iskald.payup.store:product</allowType>
+      </config>
+    </input>
+  </form>
+</content-type>

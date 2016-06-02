@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type>
+  <display-name>Product</display-name>
+  <content-display-name-script>$('name')</content-display-name-script>
+  <super-type>base:structured</super-type>
+  <allow-child-content>true</allow-child-content>
+  <form>
+    <field-set name="info">
+      <label>Product info</label>
+      <items>
+        <input type="TextLine" name="name">
+          <label>Name</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input name="image" type="ImageSelector">
+          <label>Product image</label>
+          <occurrences minimum="0" maximum="1"/>
+          <config>
+        	  <allowPath>./*</allowPath>
+          </config>
+        </input>
+        <input type="TextArea" name="description">
+          <label>description</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        </items>
+      </field-set>
+      <field-set name="costs">
+        <label>Product costs</label>
+        <items>
+        <input type="Double" name="price">
+          <label>Price</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="Double" name="vat">
+          <label>VAT</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        </items>
+      </field-set>
+      <field-set name="meta">
+        <label>Metadata</label>
+        <items>
+        <input type="TextLine" name="sku">
+          <label>SKU</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="manufacturerId">
+          <label>ManufacturerId</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        </items>
+      </field-set>
+  </form>
+</content-type>

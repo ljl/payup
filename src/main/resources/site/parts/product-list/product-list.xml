@@ -1,0 +1,17 @@
+<part>
+  <display-name>PayUp! Product list</display-name>
+  <config>
+      <input type="TextLine" name="Title">
+        <label>Title</label>
+        <occurrences minimum="0" maximum="1"/>
+      </input>
+      <input type="ContentSelector" name="item">
+        <label>Products</label>
+        <occurrences minimum="1" maximum="0"/>
+        <config>
+          <relationship-type>system:reference</relationship-type>
+          <allow-content-type>no.iskald.payup.store:product</allow-content-type>
+        </config>
+      </input>
+  </config>
+</part>
