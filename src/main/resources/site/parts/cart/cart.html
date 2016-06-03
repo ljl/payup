@@ -2,6 +2,7 @@
     <input id="cart-reload-url" type="hidden" th:value="${componentUrl}" />
     <div>
         <button id="payup-toggle-cart" class="payup-toggle-cart-button mdl-button mdl-js-button">
+            <span th:text="${#numbers.formatInteger(itemCount, 1)}">2</span>
             <i class="material-icons">shopping_cart</i>
         </button>
     </div>
@@ -9,15 +10,18 @@
         <div class="cart-content">
             <span class="mdl-layout-title title">Shopping cart</span>
             <nav class="mdl-navigation" th:if="${cart != null}">
-                <a th:each="item : ${items}" class="mdl-navigation__link" href="">
+                <div th:each="item : ${items}" class="cart-item" href="">
                     <span th:text="${item.quantity}">QTY</span>
                     <span th:text="${item.product.displayName}">Product</span>
-                    <span th:text="${item.itemPrice}">Price</span>
+                    <span th:text="${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}">Price</span>
                     <button th:attr="data-payup-cart-remove=${item.removeFromCart}" class="payup-cart-remove mdl-button mdl-js-button">
                         <i class="material-icons">remove_shopping_cart</i>
                     </button>
-                </a>
-                <a th:text="'Total ' + ${totalPrice}" class="mdl-navigation__link" href="">Totalprice</a>
+                </div>
+                <div class="cart-total">
+                    <span class="text">Total</span>
+                    <span class="value" th:text="${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</span>
+                </div>
             </nav>
         </div>
     </div>

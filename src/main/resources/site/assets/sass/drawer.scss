@@ -43,13 +43,25 @@
     align-items: stretch;
     padding-top: 16px;
   }
-  nav a {
+  nav .cart-item,
+  nav .cart-total {
     display: block;
-    -webkit-flex-shrink: 0;
-    -ms-flex-negative: 0;
     flex-shrink: 0;
     padding: 16px 40px;
     margin: 0;
     color: #757575;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav .cart-item {
+    padding-right: 16px;
+  }
+  .cart-total {
+    font-weight: bold;
+  }
+  .payup-cart-remove {
+    min-width: 32px;
+    padding: 0;
   }
 }

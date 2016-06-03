@@ -5,15 +5,20 @@
             <div class="mdl-card__title mdl-card--expand" th:style="'background:url(' + ${product.imageUrl} + ') center / cover;'">
                 <h2 class="mdl-card__title-text">
                   <span class="name" th:text="${product.displayName}">Product name</span>
-                  <span class="price" th:text="${product.data.price} + ',-'">$123</span>
+                  <span class="price">
+                    <span class="currency" th:text="${currency}">usd</span>
+                    <span class="value" th:text="${#numbers.formatDecimal(product.data.price, 1, 2, 'COMMA')}">
+                    123
+                  </span>
+                </span>
                 </h2>
             </div>
             <div class="mdl-card__supporting-text" th:text="${product.data.description}">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:text="'Add to cart '" th:attr="data-payup-cart-add=${product.addToCart}">
-                    Purchase
+                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" th:attr="data-payup-cart-add=${product.addToCart}">
+                    <i class="material-icons">add_shopping_cart</i> Add to cart
                 </button>
             </div>
         </div>

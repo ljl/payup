@@ -13,6 +13,7 @@ exports.get = function (req) {
   log.info(JSON.stringify(cart, null, 2));
   //TODO: extract method
   var items = [];
+  var itemCount = 0;
   if (cart && cart.data.items) {
     if (!Array.isArray(cart.data.items)) {
       cart.data.items = [cart.data.items];
@@ -22,10 +23,11 @@ exports.get = function (req) {
       var product = contentLib.get({
         key: item.product
       });
-      var itemPrice = product.data.price * item.quantity;
+      var price = product.data.price * item.quantity;
+      itemCount = itemCount + item.quantity;
       items.push({
         product: product,
-        itemPrice: itemPrice,
+        price: price,
         quantity: item.quantity,
         removeFromCart: portal.serviceUrl({
           service: "cart",
@@ -41,9 +43,10 @@ exports.get = function (req) {
 
   var totalPrice = 0;
   items.forEach(function (item) {
-    totalPrice += item.itemPrice;
+    totalPrice += item.price;
   });
 
+  model.itemCount = itemCount;
   model.componentUrl = portal.componentUrl({});
   model.cart = cart;
   model.items = items;

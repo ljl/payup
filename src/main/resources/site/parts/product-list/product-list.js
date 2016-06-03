@@ -3,6 +3,7 @@ var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
 
 exports.get = function (req) {
+  var currency = portal.getSiteConfig().currency;
   var products = contentLib.query({
     contentTypes: [
       'no.iskald.payup.store:product'
@@ -27,7 +28,8 @@ exports.get = function (req) {
 
   var model = {
     products: products,
-    portal: portal
+    portal: portal,
+    currency: currency
   };
   log.info(JSON.stringify(model, null, 2));
   return {
