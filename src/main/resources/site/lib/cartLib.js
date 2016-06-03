@@ -6,7 +6,6 @@ var cartUtil = __.newBean("no.iskald.payup.CartUtil");
 
 exports = {
   getCart: getCart,
-  addToCart: addToCart,
   addToCartQuantity: addToCartQuantity,
   removeFromCart: removeFromCart
 };
@@ -33,6 +32,12 @@ function addToCartQuantity(cartId, quantity, productId) {
   cartUtil.addToCart(cartId, quantity, productId);
 }
 
+
+function removeFromCart(cartId, quantity, productId) {
+  if (!cartId) throw "Missing parameter: cartId";
+  cartUtil.removeFromCart(cartId, quantity, productId);
+}
+
 function createCart(customer) {
   if (!customer) throw "Missing parameter: customer";
   var cart = contentLib.create({
@@ -48,33 +53,4 @@ function createCart(customer) {
   });
 
   return cart._id;
-}
-
-
-// TODO: Replace methods
-function addToCart(productId) {
-  var cart = getCart();
-  if (!cart) {
-    // TODO: separate method
-    var customer = customerLib.getCustomer();
-    cart = contentLib.create({
-      name: customer.displayName + ' cart',
-      parentPath: '/',
-      displayName: customer.displayName + ' cart',
-      branch: 'draft',
-      contentType: 'no.iskald.payup.store:cart',
-      data: {
-        name: customer.displayName + ' cart',
-        customer: customer._id
-      }
-    });
-  }
-  contentUtil.appendContent(cart._id, "products", productId);
-  return cart;
-}
-
-function removeFromCart(productId) {
-  var cart = getCart();
-  contentUtil.removeContent(cart._id, "products", productId);
-  return cart;
 }

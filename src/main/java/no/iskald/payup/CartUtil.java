@@ -1,6 +1,7 @@
 package no.iskald.payup;
 
 import com.enonic.xp.content.*;
+import com.enonic.xp.data.PropertyPath;
 import com.enonic.xp.data.PropertySet;
 import com.enonic.xp.node.NodeId;
 import com.enonic.xp.script.bean.BeanContext;
@@ -50,6 +51,46 @@ public class CartUtil implements ScriptBean {
         }
 
 
+
+        final UpdateContentParams params = new UpdateContentParams();
+        params.contentId( cartContent.getId() );
+        params.editor( editor );
+
+        final Content result = this.contentService.update( params );
+    }
+
+    public void removeFromCart(String cartId, Long quantity, String productId) {
+        Content cartContent = contentService.getById(ContentId.from(cartId));
+
+        Iterable<PropertySet> itemList = cartContent.getData().getSets("items");
+
+        ContentEditor editor;
+
+        int index = 0;
+        Long currentQuantity = 0L;
+        for (PropertySet item : itemList) {
+            if (item.getReference("product") != null) {
+                if (item.getReference("product").getNodeId().equals(NodeId.from(productId))) {
+                    currentQuantity = item.getLong("quantity");
+                    break;
+                }
+            }
+            index++;
+        }
+
+        Long targetQuantity = currentQuantity - quantity;
+
+        if(targetQuantity != 0) {
+            int finalIndex = index;
+            editor = edit -> {
+                edit.data.getSet("items", finalIndex).setLong("quantity", targetQuantity);
+            };
+        } else {
+            int finalIndex1 = index;
+            editor = edit -> {
+                edit.data.removeProperty(PropertyPath.from(edit.data.getSet("items", finalIndex1).getProperty().getPath()));
+            };
+        }
 
         final UpdateContentParams params = new UpdateContentParams();
         params.contentId( cartContent.getId() );

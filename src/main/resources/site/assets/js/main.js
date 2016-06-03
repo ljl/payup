@@ -2,18 +2,28 @@ $(function () {
   $("#payup-toggle-cart").on('click', function (e) {
     $(".payup-drawer").toggleClass("active");
     $(e.currentTarget).toggleClass("active");
-    console.log("12")
   });
 
-  $("[data-payup-cart-remove]").on('click', function (e) {
+  $(".payup-cart").on('click', '[data-payup-cart-remove]', function (e) {
     e.preventDefault();
-    var url = $(e.currentTarget).data('payup-target');
-    $.get(url);
+    var url = $(e.currentTarget).data('payup-cart-remove');
+    $.get(url).done(function () {
+      refreshCart();
+    });
   });
 
-  $("[data-payup-cart-add]").on("click", function (e) {
+  $(".payup-cart").on("click", '[data-payup-cart-add]', function (e) {
     e.preventDefault();
     var url = $(e.currentTarget).data('payup-cart-add');
-    $.get(url);
+    $.get(url).done(function () {
+      refreshCart();
+    });
   });
 })
+
+function refreshCart() {
+  var url = $("#cart-reload-url").val();
+  $.get(url).done(function (data) {
+    $(".cart-content").html($(data).find(".cart-content"));
+  })
+}

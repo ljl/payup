@@ -12,7 +12,9 @@ function actionSelector(req) {
       cartLib.addToCart(req.params.productId);
       break;
     case 'remove':
-      cartLib.removeFromCart(req.params.productId);
+      var customer = customerLib.getCustomer();
+      var cart = cartLib.getCart(customer._id);
+      cartLib.removeFromCart(cart._id, req.params.quantity, req.params.productId);
       break;
     case 'addQty':
       var customer = customerLib.getCustomer();
