@@ -12,7 +12,7 @@ $(function () {
     });
   });
 
-  $(".payup-cart").on("click", '[data-payup-cart-add]', function (e) {
+  $("[data-payup-cart-add]").on("click", function (e) {
     e.preventDefault();
     var url = $(e.currentTarget).data('payup-cart-add');
     $.get(url).done(function () {
