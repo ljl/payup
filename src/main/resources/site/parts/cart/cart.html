@@ -9,6 +9,9 @@
     <div class="payup-drawer">
         <div class="cart-content">
             <span class="mdl-layout-title title">Shopping cart</span>
+            <div th:if="${#lists.isEmpty(items)}">
+                Empty cart
+            </div>
             <nav class="mdl-navigation" th:if="${cart != null}">
                 <div th:each="item : ${items}" class="cart-item" href="">
                     <span th:text="${item.quantity}">QTY</span>
@@ -21,6 +24,9 @@
                 <div class="cart-total">
                     <span class="text">Total</span>
                     <span class="value" th:text="${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</span>
+                    <button class="mdl-button">
+                        <i class="material-icons">payment</i>
+                    </button>
                 </div>
             </nav>
         </div>
