@@ -9,12 +9,15 @@ exports = {
 function getCustomer() {
   log.info("*** customerLib.getCustomer()");
   var user = authLib.getUser().key;
-  var customer = fetchCustomer();
-
-  if (!customer) {
-    return createCustomer(user);
+  log.info(user);
+  if (user) {
+    var customer = fetchCustomer(user);
+    if (!customer) {
+      return createCustomer(user);
+    }
+    return customer;
   }
-  return customer;
+  throw "User doesnt exist";
 };
 
 function fetchCustomer(userKey) {
@@ -25,6 +28,13 @@ function fetchCustomer(userKey) {
     ],
   });
   log.info("FetchCustomer(" + userKey + ")" + JSON.stringify(customerResult, null, 2));
+  if (customerResult.count > 1) {
+    customerResult.hits.forEach(function (customer) {
+      contentLib.delete({
+        key: customer._id
+      });
+    });
+  }
   return customerResult.hits[0];
 }
 

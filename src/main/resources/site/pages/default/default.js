@@ -3,6 +3,7 @@ var libs = {
   thymeleaf: require('/lib/xp/thymeleaf')
 };
 var cartLib = require('cartLib');
+var customerLib = require('customerLib');
 var contentHelper = require('contentHelper');
 var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
@@ -24,7 +25,7 @@ function handleGet(req) {
     model.mainRegion = content.page.regions['main'];
     model.siteName = site.displayName;
 
-    var cart = cartLib.getCart();
+    var cart = cartLib.getCart(customerLib.getCustomer()._id);
     log.info("*** CART PART***");
     log.info(JSON.stringify(cart, null, 2));
     //TODO: extract method

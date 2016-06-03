@@ -1,7 +1,8 @@
 $(function () {
-  console.log("jquery in tha house");
-  $("#payup-toggle-cart").on('click', function () {
+  $("#payup-toggle-cart").on('click', function (e) {
     $(".payup-drawer").toggleClass("active");
+    $(e.currentTarget).toggleClass("active");
+    console.log("12")
   });
 
   $("[data-payup-cart-remove]").on('click', function (e) {

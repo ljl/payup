@@ -1,4 +1,5 @@
 var cartLib = require('cartLib');
+var customerLib = require('customerLib');
 
 exports.post = actionSelector;
 exports.get = actionSelector;
@@ -14,7 +15,9 @@ function actionSelector(req) {
       cartLib.removeFromCart(req.params.productId);
       break;
     case 'addQty':
-      cartLib.addToCartQuantity(req.params.quantity, req.params.productId);
+      var customer = customerLib.getCustomer();
+      var cart = cartLib.getCart(customer._id);
+      cartLib.addToCartQuantity(cart._id, req.params.quantity, req.params.productId);
       break;
   }
 }
