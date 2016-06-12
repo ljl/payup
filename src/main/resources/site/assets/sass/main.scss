@@ -2,6 +2,7 @@
 @import 'header';
 @import 'drawer';
 @import 'product-list';
+@import 'checkout';
 .payup-toggle-cart-button {
   position: absolute;
   right: 0;
@@ -12,7 +13,7 @@
     padding-right: 10px;
     font-size: 16px;
   }
-  &.active {
+  .active & {
     span {
       display: none;
     }

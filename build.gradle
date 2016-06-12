@@ -34,6 +34,7 @@ dependencies {
     include "com.enonic.xp:lib-xslt:${xpVersion}"
     include "com.enonic.xp:lib-auth:${xpVersion}"
     include "com.enonic.xp:lib-context:${xpVersion}"
+    include "com.enonic.xp:lib-i18n:${xpVersion}"
     include "com.stripe:stripe-java:2.5.0"
 }
 

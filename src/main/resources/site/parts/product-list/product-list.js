@@ -31,8 +31,8 @@ exports.get = function (req) {
     portal: portal,
     currency: currency
   };
-  log.info(JSON.stringify(model, null, 2));
+
   return {
     body: thymeleaf.render(resolve('product-list.html'), model),
   }
-}
+};

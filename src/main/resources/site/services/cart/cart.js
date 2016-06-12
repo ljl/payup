@@ -1,25 +1,20 @@
 var cartLib = require('cartLib');
-var customerLib = require('customerLib');
+var payup = require('payupLib');
 
 exports.post = actionSelector;
 exports.get = actionSelector;
 
 function actionSelector(req) {
-  log.info("***CARTSERVICE***");
-  log.info(JSON.stringify(req, null, 2));
+  var context = payup.context();
   switch (req.params.action) {
     case 'add':
       cartLib.addToCart(req.params.productId);
       break;
     case 'remove':
-      var customer = customerLib.getCustomer();
-      var cart = cartLib.getCart(customer._id);
-      cartLib.removeFromCart(cart._id, req.params.quantity, req.params.productId);
+      cartLib.removeFromCart(context.cart._id, req.params.quantity, req.params.productId);
       break;
     case 'addQty':
-      var customer = customerLib.getCustomer();
-      var cart = cartLib.getCart(customer._id);
-      cartLib.addToCartQuantity(cart._id, req.params.quantity, req.params.productId);
+      cartLib.addToCartQuantity(context.cart._id, req.params.quantity, req.params.productId);
       break;
   }
 }

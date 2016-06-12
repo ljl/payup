@@ -7,9 +7,8 @@ exports = {
 }
 
 function getCustomer() {
-  log.info("*** customerLib.getCustomer()");
   var user = authLib.getUser().key;
-  log.info(user);
+
   if (user) {
     var customer = fetchCustomer(user);
     if (!customer) {
@@ -18,7 +17,7 @@ function getCustomer() {
     return customer;
   }
   throw "User doesnt exist";
-};
+}
 
 function fetchCustomer(userKey) {
   var customerResult = contentLib.query({
@@ -27,7 +26,8 @@ function fetchCustomer(userKey) {
       'no.iskald.payup.store:customer'
     ],
   });
-  log.info("FetchCustomer(" + userKey + ")" + JSON.stringify(customerResult, null, 2));
+  if (customerResult.count == 0) return;
+
   if (customerResult.count > 1) {
     customerResult.hits.forEach(function (customer) {
       contentLib.delete({
@@ -49,6 +49,6 @@ function createCustomer(userKey) {
       userKey: userKey
     }
   });
-  log.info("CreateCustomer(" + userKey + ")" + JSON.stringify(createCustomerResult, null, 2));
+
   return createCustomerResult;
 }

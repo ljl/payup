@@ -69,9 +69,7 @@ function getPriceTotal(contentList) {
 exports.get = function (req) {
   var view = resolve('stripe.html');
   var purchaseItems = getContentFromIdList(portal.getComponent().config.item);
-  log.info(JSON.stringify(portal.getSiteConfig().publishableKey));
-  log.info(JSON.stringify(authLib.getUser()));
-  log.info(JSON.stringify(purchaseItems));
+
   var model = {
     component: portal.getComponent(),
     componentUrl: portal.componentUrl({}),

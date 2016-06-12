@@ -1,58 +1,37 @@
-var cartLib = require('cartLib');
-var customerLib = require('customerLib');
-var contentLib = require('/lib/xp/content');
-var contentHelper = require('contentHelper');
+var payup = require('payupLib');
 var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
 
 exports.get = function (req) {
-  var model = {};
-
-  var cart = cartLib.getCart(customerLib.getCustomer()._id);
-  log.info("*** CART PART***");
-  log.info(JSON.stringify(cart, null, 2));
-  //TODO: extract method
-  var items = [];
-  var itemCount = 0;
-  if (cart && cart.data.items) {
-    if (!Array.isArray(cart.data.items)) {
-      cart.data.items = [cart.data.items];
-    }
-    cart.data.items.forEach(function (item) {
-      log.info(item.product);
-      var product = contentLib.get({
-        key: item.product
-      });
-      var price = product.data.price * item.quantity;
-      itemCount = itemCount + item.quantity;
-      items.push({
-        product: product,
-        price: price,
-        quantity: item.quantity,
-        removeFromCart: portal.serviceUrl({
-          service: "cart",
-          params: {
-            action: "remove",
-            productId: product._id,
-            quantity: 1
-          }
-        })
-      });
-    });
-  }
-
-  var totalPrice = 0;
-  items.forEach(function (item) {
-    totalPrice += item.price;
+  var context = payup.context();
+  var checkoutUrl = portal.serviceUrl({
+    service: "checkout"
   });
 
-  model.itemCount = itemCount;
+  var model = {};
+  model.checkoutUrl = checkoutUrl;
+  model.itemCount = context.cartItemsTotal;
   model.componentUrl = portal.componentUrl({});
-  model.cart = cart;
-  model.items = items;
-  model.totalPrice = totalPrice;
+  model.cart = context.cart;
+  model.items = appendRemoveFromCartLink(context.cartItems);
+  model.totalPrice = context.cartTotal;
 
   return {
-    body: thymeleaf.render(resolve('cart.html'), model),
+    body: thymeleaf.render(resolve('cart.html'), model)
   }
+};
+
+function appendRemoveFromCartLink(items) {
+  items.forEach(function (item) {
+    log.info(JSON.stringify(item));
+    item.removeFromCart = portal.serviceUrl({
+      service: 'cart',
+      params: {
+        action: 'remove',
+        productId: item.product._id,
+        quantity: 1
+      }
+    })
+  });
+  return items;
 }

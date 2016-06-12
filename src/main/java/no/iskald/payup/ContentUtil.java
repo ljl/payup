@@ -1,6 +1,7 @@
 package no.iskald.payup;
 
 import com.enonic.xp.content.*;
+import com.enonic.xp.data.PropertySet;
 import com.enonic.xp.script.bean.BeanContext;
 import com.enonic.xp.script.bean.ScriptBean;
 import com.enonic.xp.util.Reference;
@@ -19,6 +20,7 @@ public class ContentUtil implements ScriptBean {
 
         ContentEditor editor = edit -> {
             edit.data.addReference(field, Reference.from(appendKey));
+            edit.inheritPermissions = true;
         };
 
         final UpdateContentParams params = new UpdateContentParams();

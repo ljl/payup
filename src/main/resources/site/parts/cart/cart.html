@@ -1,8 +1,8 @@
 <div class="payup-cart">
     <input id="cart-reload-url" type="hidden" th:value="${componentUrl}" />
-    <div>
+    <div class="payup-toggle-cart-wrapper">
         <button id="payup-toggle-cart" class="payup-toggle-cart-button mdl-button mdl-js-button">
-            <span th:text="${#numbers.formatInteger(itemCount, 1)}">2</span>
+            <span id="cart-count" th:text="${#numbers.formatInteger(itemCount, 1)}">2</span>
             <i class="material-icons">shopping_cart</i>
         </button>
     </div>
@@ -24,11 +24,14 @@
                 <div class="cart-total">
                     <span class="text">Total</span>
                     <span class="value" th:text="${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</span>
-                    <button class="mdl-button">
+                    <button id="payup-checkout-button" th:attr="data-payup-checkout-url=${checkoutUrl}" class="mdl-button">
                         <i class="material-icons">payment</i>
                     </button>
                 </div>
             </nav>
         </div>
+    </div>
+    <div id="payup-checkout-modal" class="mdl-dialog">
+
     </div>
 </div>

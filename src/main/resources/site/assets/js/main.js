@@ -1,7 +1,6 @@
 $(function () {
-  $("#payup-toggle-cart").on('click', function (e) {
-    $(".payup-drawer").toggleClass("active");
-    $(e.currentTarget).toggleClass("active");
+  $(".payup-cart").on('click', '#payup-toggle-cart', function (e) {
+    $(".payup-cart").toggleClass("active");
   });
 
   $(".payup-cart").on('click', '[data-payup-cart-remove]', function (e) {
@@ -19,11 +18,21 @@ $(function () {
       refreshCart();
     });
   });
+  $(".payup-cart").on('click', '#payup-checkout-button', function () {
+    $("#payup-checkout-modal").show();
+    var checkoutUrl = $("[data-payup-checkout-url]").data('payup-checkout-url');
+    console.log(checkoutUrl);
+    $.get(checkoutUrl).done(function (data) {
+      $("#payup-checkout-modal").html(data);
+    });
+  })
 })
 
 function refreshCart() {
   var url = $("#cart-reload-url").val();
   $.get(url).done(function (data) {
-    $(".cart-content").html($(data).find(".cart-content"));
+    $(".cart-content").html($(data).find(".cart-content").html());
+    $(".payup-toggle-cart-wrapper").html($(data).find(".payup-toggle-cart-wrapper").html());
+
   })
 }
