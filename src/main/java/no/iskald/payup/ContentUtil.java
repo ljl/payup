@@ -9,9 +9,6 @@ import com.enonic.xp.util.Reference;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by lasse on 28.05.16.
- */
 public class ContentUtil implements ScriptBean {
     private ContentService contentService;
 

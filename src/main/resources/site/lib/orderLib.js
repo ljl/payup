@@ -1,6 +1,5 @@
 var contentLib = require('/lib/xp/content');
 var portal = require('/lib/xp/portal');
-var orderUtil = __.newBean("no.iskald.payup.OrderUtil");
 
 exports = {
   createOrder: createOrderFromCart
@@ -8,25 +7,22 @@ exports = {
 
 function createOrderFromCart(cart, amount) {
   var site = portal.getSite();
-  var orderName = 'Order - ' + cart._id + ' - ' + getDate();
+  var orderName = getDate();
   var order = contentLib.create({
     name: orderName,
     parentPath: site._path + '/orders',
     displayName: orderName,
+    branch: 'draft',
     contentType: 'no.iskald.payup.store:order',
     data: {
       customer: cart.data.customer,
-      amount: amount
+      amount: amount,
+      cart: cart._id,
+      items: cart.data.items
     }
   });
-  if (!Array.isArray(cart.data.items)) {
-    cart.data.items = [cart.data.items];
-  }
 
-  cart.data.items.forEach(function (item) {
-    log.info(JSON.stringify(item));
-    orderUtil.addToOrder(order._id, item.quantity, item.product)
-  });
+  contentLib.publish({keys: [order._id], sourceBranch: 'draft', targetBranch: 'master'});
   return order;
 }
 

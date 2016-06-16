@@ -22,9 +22,10 @@ function getCustomer() {
 function fetchCustomer(userKey) {
   var customerResult = contentLib.query({
     query: "data.userKey = '" + userKey + "'",
+    branch: "draft",
     contentTypes: [
       'no.iskald.payup.store:customer'
-    ],
+    ]
   });
   if (customerResult.count == 0) return;
 

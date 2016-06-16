@@ -3,6 +3,7 @@ package no.iskald.payup;
 import com.enonic.xp.content.*;
 import com.enonic.xp.data.PropertyPath;
 import com.enonic.xp.data.PropertySet;
+import com.enonic.xp.lib.content.PublishContentHandler;
 import com.enonic.xp.node.NodeId;
 import com.enonic.xp.script.bean.BeanContext;
 import com.enonic.xp.script.bean.ScriptBean;
@@ -14,7 +15,7 @@ import com.enonic.xp.util.Reference;
 public class CartUtil implements ScriptBean {
     private ContentService contentService;
 
-    public void addToCart(String cartId, Long quantity, String productId) {
+    public Content addToCart(String cartId, Long quantity, String productId) {
         Content cartContent = contentService.getById(ContentId.from(cartId));
 
         Iterable<PropertySet> itemList = cartContent.getData().getSets("items");
@@ -38,9 +39,7 @@ public class CartUtil implements ScriptBean {
         if (existsInCart) {
             int finalIndex = index;
             Long finalCurrentQuantity = currentQuantity;
-            editor = edit -> {
-                edit.data.getSet("items", finalIndex).setLong("quantity", finalCurrentQuantity + 1L);
-            };
+            editor = edit -> edit.data.getSet("items", finalIndex).setLong("quantity", finalCurrentQuantity + 1L);
         } else {
             editor = edit -> {
                 PropertySet set = new PropertySet();
@@ -50,16 +49,14 @@ public class CartUtil implements ScriptBean {
             };
         }
 
-
-
         final UpdateContentParams params = new UpdateContentParams();
         params.contentId( cartContent.getId() );
         params.editor( editor );
 
-        final Content result = this.contentService.update( params );
+        return this.contentService.update( params );
     }
 
-    public void removeFromCart(String cartId, Long quantity, String productId) {
+    public Content removeFromCart(String cartId, Long quantity, String productId) {
         Content cartContent = contentService.getById(ContentId.from(cartId));
 
         Iterable<PropertySet> itemList = cartContent.getData().getSets("items");
@@ -96,7 +93,7 @@ public class CartUtil implements ScriptBean {
         params.contentId( cartContent.getId() );
         params.editor( editor );
 
-        final Content result = this.contentService.update( params );
+        return this.contentService.update( params );
     }
 
     @Override
