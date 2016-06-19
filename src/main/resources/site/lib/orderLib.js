@@ -2,7 +2,8 @@ var contentLib = require('/lib/xp/content');
 var portal = require('/lib/xp/portal');
 
 exports = {
-  createOrder: createOrderFromCart
+  createOrder: createOrderFromCart,
+  updateOrder: updateOrderStatus
 };
 
 function createOrderFromCart(cart, amount) {
@@ -24,6 +25,25 @@ function createOrderFromCart(cart, amount) {
 
   contentLib.publish({keys: [order._id], sourceBranch: 'draft', targetBranch: 'master'});
   return order;
+}
+
+function updateOrderStatus(orderId) {
+  
+  function editor(c) {
+    log.info("**** Updating orderstatus");
+    c.data.status = 'payed';
+    return c;
+  }
+  
+  var order = contentLib.modify({
+    key: orderId,
+    editor: editor,
+    branch: 'draft'
+  });
+
+  log.info(JSON.stringify(order));
+
+  contentLib.publish({keys: [order._id], sourceBranch: 'draft', targetBranch: 'master'});
 }
 
 function getDate() {

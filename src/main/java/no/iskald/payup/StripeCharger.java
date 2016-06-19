@@ -2,6 +2,8 @@ package no.iskald.payup;
 
 import com.enonic.xp.script.bean.BeanContext;
 import com.enonic.xp.script.bean.ScriptBean;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.stripe.Stripe;
 import com.stripe.exception.*;
 import com.stripe.model.Charge;
@@ -14,7 +16,7 @@ import java.util.Map;
 public class StripeCharger implements ScriptBean {
     Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-    public String chargeCard(String apiKey, String token, double amount, String description, String currency) throws APIException, AuthenticationException, InvalidRequestException, APIConnectionException {
+    public Charge chargeCard(String apiKey, String token, double amount, String description, String currency) throws APIException, AuthenticationException, InvalidRequestException, APIConnectionException {
       Stripe.apiKey = apiKey;
       try {
         Map<String, Object> chargeParams = new HashMap<String, Object>();
@@ -24,10 +26,11 @@ public class StripeCharger implements ScriptBean {
         chargeParams.put("description", description);
 
         Charge charge = Charge.create(chargeParams);
+        return charge;
       } catch (CardException e) {
-          return e.getMessage();
+          return null;
       }
-      return "Payment successful";
+
     }
 
     @Override

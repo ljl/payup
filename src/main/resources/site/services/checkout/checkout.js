@@ -48,11 +48,9 @@ function getLocalizedStrings() {
 
 function getCheckout(req) {
   var context = payup.context();
-  clearOrders(context);
   var view = resolve('stripe.html');
-  var order = orderLib.createOrder(context.cart, context.cartTotal);
+  
   var model = {
-    order: order,
     cart: context.cart,
     items: context.cartItems,
     totalPrice: context.cartTotal,
@@ -89,15 +87,19 @@ function clearOrders(context) {
   });
 }
 
-// TODO: Should create order
 function doCheckout(req) {
   var context = payup.context();
-
+  var order = orderLib.createOrder(context.cart, context.cartTotal);
   var secretApiKey = portal.getSiteConfig().secretKey;
   var currency = portal.getSiteConfig().currency;
-  var stripeResponse = stripe.chargeCard(secretApiKey, req.params.token, context.cartTotal, context.cart.displayName, currency);
+  var charge = stripe.chargeCard(secretApiKey, req.params.token, context.cartTotal, context.cart.displayName, currency);
+  log.info(JSON.stringify(charge.status));
+  if (charge.status == "succeeded") {
+    orderLib.updateOrder(order._id);
+  }
+
   var model = {};
   return {
-    body: stripeResponse
+    body: charge.status
   }
 }
