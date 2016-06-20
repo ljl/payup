@@ -1,0 +1,5 @@
+<div class="payup-order" th:classappend="${charge.status}">
+    <h4>Order failed</h4>
+    <h5 th:text="'Payment status:' + ${charge.status}">Fail</h5>
+    <div>Payment failed, please try again</div>
+</div>

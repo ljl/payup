@@ -3,31 +3,15 @@ var thymeleaf = require('/lib/xp/thymeleaf'); // Import the Thymeleaf rendering 
 var i18nLib = require('/lib/xp/i18n');
 var payup = require('payupLib');
 var orderLib = require('orderLib');
+var customerLib = require('customerLib');
+var cartLib = require('cartLib');
 var contentLib = require('/lib/xp/content');
+var contextLib = require('/lib/xp/context');
 var stripe = __.newBean("no.iskald.payup.StripeCharger");
 
 exports.post = doCheckout;
 exports.get = getCheckout;
 
-function css() {
-  var html = '';
-  html += '<link rel="stylesheet" type="text/css" href="';
-  html += portal.assetUrl({
-    path: 'css/stripe.css'
-  });
-  html += '" />';
-  return html;
-}
-
-function scripts() {
-  var html = '';
-  html += '<script src="';
-  html += portal.assetUrl({
-    path: 'js/payup.js'
-  });
-  html += '"></script>';
-  return html;
-}
 
 function getLocalizedStrings() {
   return {
@@ -47,12 +31,14 @@ function getLocalizedStrings() {
 }
 
 function getCheckout(req) {
-  var context = payup.context();
-  var view = resolve('stripe.html');
+  var context = payup.context(req);
+  var view = resolve('checkout.html');
+  var currency = portal.getSiteConfig().currency;
   
   var model = {
     cart: context.cart,
     items: context.cartItems,
+    currency: currency,
     totalPrice: context.cartTotal,
     component: portal.getComponent(),
     completeCheckoutUrl: portal.serviceUrl({
@@ -63,11 +49,7 @@ function getCheckout(req) {
   };
 
   return {
-    body: thymeleaf.render(view, model),
-    pageContributions: {
-      headEnd: css(),
-      bodyEnd: scripts()
-    }
+    body: thymeleaf.render(view, model)
   }
 }
 
@@ -88,18 +70,49 @@ function clearOrders(context) {
 }
 
 function doCheckout(req) {
-  var context = payup.context();
-  var order = orderLib.createOrder(context.cart, context.cartTotal);
+  log.info("*** Performing checkout");
+  var context = payup.context(req);
+  var shippingAddress = getAddress(context.customer, req.params);
+  log.info(JSON.stringify(shippingAddress));
+  var order = orderLib.createOrder(context.cart, shippingAddress, context.cartTotal, context.customer);
   var secretApiKey = portal.getSiteConfig().secretKey;
   var currency = portal.getSiteConfig().currency;
   var charge = stripe.chargeCard(secretApiKey, req.params.token, context.cartTotal, context.cart.displayName, currency);
-  log.info(JSON.stringify(charge.status));
+  log.info("*** Payment complete -> " + JSON.stringify(charge.status));
+
+  var template;
   if (charge.status == "succeeded") {
-    orderLib.updateOrder(order._id);
+    template = resolve('checkout-complete.html');
+    orderLib.updateOrder(order._id, 'payment-complete');
+    cartLib.archiveCart(context.cart._id);
+  } else {
+    template = resolve('checkout-failed.html');
+    orderLib.updateOrder(order._id, 'payment-failed');
   }
 
-  var model = {};
+  var model = {
+    order: order,
+    charge: charge
+  };
   return {
-    body: charge.status
+    body: thymeleaf.render(template, model)
   }
+}
+
+function getAddress(customer, data) {
+  var shippingAddress = {};
+  if (customer) {
+    var updatedCustomer = customerLib.updateAddress(context.customer, data);
+    shippingAddress.name = updatedCustomer.name;
+    shippingAddress.address = updatedCustomer.address;
+    shippingAddress.zip = updatedCustomer.zip;
+    shippingAddress.city = updatedCustomer.city;
+  } else {
+    shippingAddress.name = data.name;
+    shippingAddress.address = data.address;
+    shippingAddress.zip = data.zip;
+    shippingAddress.city = data.city;
+  }
+
+  return shippingAddress;
 }

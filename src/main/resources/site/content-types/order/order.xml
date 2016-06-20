@@ -4,9 +4,30 @@
   <super-type>base:structured</super-type>
   <allow-child-content>true</allow-child-content>
   <form>
+    <field-set name="shipping">
+      <label>Ship to</label>
+      <items>
+      <input type="TextLine" name="name">
+        <label>Name</label>
+        <occurrences minimum="1" maximum="1"/>
+      </input>
+      <input type="TextLine" name="address">
+        <label>Address</label>
+        <occurrences minimum="1" maximum="1"/>
+      </input>
+      <input type="TextLine" name="zip">
+        <label>Zip code</label>
+        <occurrences minimum="1" maximum="1"/>
+      </input>
+      <input type="TextLine" name="city">
+        <label>City</label>
+        <occurrences minimum="1" maximum="1"/>
+      </input>
+      </items>
+    </field-set>
     <input type="ContentSelector" name="customer">
       <label>Customer</label>
-      <occurrences minimum="1" maximum="1"/>
+      <occurrences minimum="0" maximum="1"/>
       <config>
         <relationship>system:reference</relationship>
         <allowType>no.iskald.payup.store:customer</allowType>
@@ -47,7 +68,8 @@
       <occurrences minimum="0" maximum="0"/>
       <config>
         <option value="created">Order created</option>
-        <option value="payed">Payment complete</option>
+        <option value="payment-failed">Payment failed</option>
+        <option value="payment-complete">Payment complete</option>
         <option value="shipped">Order shipped</option>
       </config>
       <default>created</default>

@@ -9,16 +9,20 @@ exports = {
   context: getContext
 };
 
-function getContext() {
+function getContext(req) {
   var context = {};
-
   context.customer = customerLib.getCustomer();
-  context.cart = cartLib.getCart(context.customer);
+  if (!context.customer) {
+    context.cart = cartLib.getCartFromSession(req.cookies.JSESSIONID);
+  } else {
+    context.cart = cartLib.getCartFromCustomer(context.customer);
+  }
   context.cartItems = cartLib.getCartItems(context.cart);
   context.cartItemsTotal = getItemCount(context.cartItems);
   context.cartTotal = getTotalPrice(context.cartItems);
 
   log.info("**** CONTEXT ****");
+  log.info(JSON.stringify(req, null, 2));
   log.info(JSON.stringify(context, null, 2));
   return context;
 }

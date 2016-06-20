@@ -25,8 +25,14 @@ $(function () {
     $.get(checkoutUrl).done(function (data) {
       $("#payup-checkout-modal").html(data);
     });
-  })
-})
+  });
+
+  $(".payup-cart").on('click', '.payup-checkout-close', function(e) {
+    e.preventDefault();
+    $("#payup-checkout-modal").hide();
+  });
+
+});
 
 function refreshCart() {
   var url = $("#cart-reload-url").val();

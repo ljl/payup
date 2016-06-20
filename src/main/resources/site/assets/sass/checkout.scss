@@ -1,25 +1,17 @@
 .payup-checkout-wrapper {
-
+  table {
+    width: 100%;
+  }
+  .cart-total {
+    font-weight:bold;
+    .value {
+      text-transform: uppercase;
+    }
+  }
 }
 
 .payup-checkout-wrapper input[type='submit'] {
-  background: 0 0;
-  border: none;
-  border-radius: 2px;
-  color: #000;
-  position: relative;
-  height: 36px;
-  margin: 0;
-  min-width: 64px;
-  padding: 0 16px;
-  display: inline-block;
-  font-size: 14px;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  line-height: 36px;
-  vertical-align: middle;
+  color: white;
 }
 
 .payup-items {

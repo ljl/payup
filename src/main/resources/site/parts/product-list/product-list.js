@@ -3,12 +3,14 @@ var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
 
 exports.get = function (req) {
+  log.info("***** Product List");
   var currency = portal.getSiteConfig().currency;
   var products = contentLib.query({
     contentTypes: [
       'no.iskald.payup.store:product'
-    ],
+    ]
   }).hits;
+  log.info(JSON.stringify(products));
 
   products.forEach(function (product) {
     product.imageUrl = portal.imageUrl({

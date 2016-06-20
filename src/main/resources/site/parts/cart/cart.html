@@ -9,10 +9,10 @@
     <div class="payup-drawer">
         <div class="cart-content">
             <span class="mdl-layout-title title">Shopping cart</span>
-            <div th:if="${#lists.isEmpty(items)}">
+            <div class="empty-cart-message" th:if="${#lists.isEmpty(items)}">
                 Empty cart
             </div>
-            <nav class="mdl-navigation" th:if="${cart != null}">
+            <nav class="mdl-navigation" th:if="${cart != null and not #lists.isEmpty(items)}">
                 <div th:each="item : ${items}" class="cart-item" href="">
                     <span th:text="${item.quantity}">QTY</span>
                     <span th:text="${item.product.displayName}">Product</span>

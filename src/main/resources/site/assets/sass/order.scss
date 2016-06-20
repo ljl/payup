@@ -1,0 +1,18 @@
+.payup-order {
+  color: white;
+  text-shadow: 1px 1px 0 #333;
+  margin-top: 10px;
+  padding: 20px;
+  padding-top: 5px;
+
+  &.succeeded {
+    background-color: rgb(76, 175, 80);
+  }
+
+  &.failed {
+    background-color: rgb(244, 67, 54);
+  }
+  button {
+    color:white;
+  }
+}

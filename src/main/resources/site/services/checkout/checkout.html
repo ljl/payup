@@ -6,7 +6,8 @@
 
 
     function stripeResponseHandler(status, response) {
-        var formData = new FormData();
+        var paymentForm = document.getElementById('payment-form');
+        var formData = new FormData(paymentForm);
         formData.append('token', response.id);
         var xhr = new XMLHttpRequest();
         xhr.open('POST', completeCheckoutUrl, true);
@@ -22,32 +23,72 @@
                     document.getElementById('payment-result').innerHTML = "Backend server error";
                 }
             }
+            refreshCart();
         };
     }
 
     Stripe.setPublishableKey(publishableKey);
-    var cardDetailsForm = document.getElementById('payment-form');
-    cardDetailsForm.addEventListener('submit', function(event) {
+    var paymentForm = document.getElementById('payment-form');
+    paymentForm.addEventListener('submit', function(event) {
         console.log("submitting");
-        Stripe.card.createToken(cardDetailsForm, stripeResponseHandler);
+        Stripe.card.createToken(paymentForm, stripeResponseHandler);
         document.getElementById('payment-result').innerHTML = 'Paying up! Hold on...'
         event.preventDefault();
     });
 </script>
 <div class="payup-checkout-wrapper">
     <h3>Checkout</h3>
-    <div th:each="item : ${items}" class="cart-item" href="">
-        <span th:text="${item.quantity}">QTY</span>
-        <span th:text="${item.product.displayName}">Product</span>
-        <span th:text="${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}">Price</span>
-    </div>
-    <div class="cart-total">
-        <span class="text">Total</span>
-        <span class="value" th:text="${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</span>
-    </div>
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th>Quantity</th>
+                <th>Item</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${items}" class="cart-item" href="">
+                <td th:text="${item.quantity}">QTY</td>
+                <td th:text="${item.product.displayName}">Product</td>
+                <td th:text="${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}">Price</td>
+            </tr>
+            <tr class="cart-total">
+                <td class="text">Total</td>
+                <td></td>
+                <td class="value" th:text="${currency} + ' ' + ${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</td>
+            </tr>
+        </tbody>
+    </table>
+
     <div class="payup-payment">
-        <h4>Payment details</h4>
         <form action="" method="POST" id="payment-form">
+        <h4>Shipment details</h4>
+            <div class="payup-form-row">
+                <label>
+                    <span>Name</span>
+                </label>
+                <input type="text" name="name" value="Lasse JL" />
+            </div>
+            <div class="payup-form-row">
+                <label>
+                    <span>Street Address</span>
+                </label>
+                <input type="text" name="address" value="Motzfeldsgt 8" />
+            </div>
+            <div class="payup-form-row">
+                <label>
+                    <span>Zip code</span>
+                </label>
+                <input type="text" name="zip" value="0123" />
+            </div>
+            <div class="payup-form-row">
+                <label>
+                    <span>City</span>
+                </label>
+                <input type="text" name="city" value="Oslo" />
+            </div>
+        <h4>Payment details</h4>
+
             <div class="payup-form-row">
                 <label>
                     <span th:text="${i18n.cardholdername}">Card Holder name</span>
@@ -78,14 +119,14 @@
                 </label>
                 <input type="text" size="4" data-stripe="cvc" value="123" />
             </div>
-            <pre th:text="${order}">
 
-</pre>
             <div class="mdl-dialog__actions">
-                <button class="mdl-button">Cancel</button>
-                <input class="mdl-button submit mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="PayUp!" />
+                <input class="mdl-button submit mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Purchase" />
+                <button class="mdl-button payup-checkout-close">Cancel</button>
             </div>
         </form>
     </div>
-    <span id="payment-result"></span>
+    <div id="payment-result">
+        <!-- dont selfclose -->
+    </div>
 </div>

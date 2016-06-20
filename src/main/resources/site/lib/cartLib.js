@@ -1,12 +1,14 @@
 var contentLib = require('/lib/xp/content');
 var portal = require('/lib/xp/portal');
-var cartUtil = __.newBean("no.iskald.payup.CartUtil");
+var contextLib = require('/lib/xp/context');
 
 exports = {
-  getCart: getCart,
+  getCartFromCustomer: getCartFromCustomer,
+  getCartFromSession: getCartFromSession,
   addToCartQuantity: addToCartQuantity,
   removeFromCart: removeFromCart,
-  getCartItems: getCartItems
+  getCartItems: getCartItems,
+  archiveCart: archiveCart
 };
 
 function addToCartQuantity(cartId, quantity, productId) {
@@ -55,9 +57,11 @@ function addToCartQuantity(cartId, quantity, productId) {
 
   contentLib.modify({
     key: cartId,
-    editor: editor
+    editor: editor,
+    branch: 'draft'
   });
 
+  contentLib.publish({keys: [cartId], sourceBranch: 'draft', targetBranch: 'master'});
 }
 
 
@@ -100,11 +104,14 @@ function removeFromCart(cartId, quantity, productId) {
 
   contentLib.modify({
     key: cartId,
-    editor: editor
+    editor: editor,
+    branch: 'draft'
   });
+
+  contentLib.publish({keys: [cartId], sourceBranch: 'draft', targetBranch: 'master'});
 }
 
-function getCart(customer) {
+function getCartFromCustomer(customer) {
   if (!customer && !customer._id) throw "Cannot get cart. Missing parameter: customer";
   var cartResult = contentLib.query({
     query: "data.customer = '" + customer._id + "'",
@@ -121,10 +128,69 @@ function getCart(customer) {
   if (cartResult.count == 1) {
     return cartResult.hits[0];
   }
-  return createCart(customer);
+
+  return createCartForCustomer(customer);
 }
 
-function createCart(customer) {
+function getCartFromSession(sessionId) {
+  if (!sessionId) throw "Cannot get cart. Missing parameter: sessionId";
+  var cartResult = contentLib.query({
+    query: "data.session = '" + sessionId + "'",
+    branch: 'draft',
+    contentTypes: [
+      'no.iskald.payup.store:cart'
+    ]
+  });
+
+  if (cartResult.count > 1) {
+    log.error("Multiple carts found for session " + sessionId);
+  }
+
+  if (cartResult.count == 1) {
+    return cartResult.hits[0];
+  }
+
+  return createCartForSession(sessionId);
+}
+
+function createCartForSession(sessionId) {
+  if (!sessionId) throw "Cannot create cart. Missing parameter: sessionId";
+  var site = portal.getSite();
+  try {
+    
+    var cart = contextLib.run({
+      branch: 'draft',
+      user: {
+        login: 'su',
+        userStore: 'system'
+      }
+    }, function() {
+      var c = contentLib.create({
+        name: 'Cart - ' + sessionId,
+        parentPath: site._path + '/shopping-carts',
+        displayName: 'Cart for ' + sessionId,
+        contentType: 'no.iskald.payup.store:cart',
+        branch: 'draft',
+        data: {
+          name: 'Cart for ' + sessionId,
+          session: sessionId
+        }
+      });
+      contentLib.publish({keys: [c._id], sourceBranch: 'draft', targetBranch: 'master'});
+    });
+
+  } catch (e) {
+    if (e.code == 'contentAlreadyExists') {
+      log.error('There is already a content with that name');
+    } else {
+      log.error('Unexpected error: ' + e.message);
+    }
+  }
+
+  return cart;
+}
+
+function createCartForCustomer(customer) {
   if (!customer) throw "Cannot create cart. Missing parameter: customer";
   var site = portal.getSite();
   try {
@@ -139,6 +205,7 @@ function createCart(customer) {
         customer: customer._id
       }
     });
+    contentLib.publish({keys: [cart._id], sourceBranch: 'draft', targetBranch: 'master'});
   } catch (e) {
     if (e.code == 'contentAlreadyExists') {
       log.error('There is already a content with that name');
@@ -170,4 +237,20 @@ function getCartItems(cart) {
     });
   }
   return items;
+}
+
+function archiveCart(cartId) {
+  contextLib.run({
+    branch: 'draft',
+    user: {
+      login: 'su',
+      userStore: 'system'
+    }
+  }, function() {
+    contentLib.delete({
+      key: cartId,
+      branch: 'draft'
+    });
+    contentLib.publish({keys: [cartId], sourceBranch: 'draft', targetBranch: 'master'});
+  });
 }

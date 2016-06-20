@@ -1,8 +1,9 @@
 @import 'layout';
 @import 'header';
-@import 'drawer';
+@import 'cart';
 @import 'product-list';
 @import 'checkout';
+@import 'order';
 .payup-toggle-cart-button {
   position: absolute;
   right: 0;

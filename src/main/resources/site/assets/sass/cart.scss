@@ -33,6 +33,9 @@
     line-height: 64px;
     padding-left: 40px;
   }
+  .empty-cart-message {
+    text-align: center;
+  }
   nav {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
@@ -67,7 +70,7 @@
   display: none;
   position: absolute;
   background: white;
-  top: 15%;
+  top: 5%;
   left: calc(50% - 160px);
   z-index: 100;
   width: 320px;

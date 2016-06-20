@@ -8,9 +8,13 @@
       <label>Name</label>
       <occurrences minimum="1" maximum="1"/>
     </input>
+    <input type="TextLine" name="session">
+      <label>Session</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
     <input type="ContentSelector" name="customer">
       <label>Customer</label>
-      <occurrences minimum="1" maximum="1"/>
+      <occurrences minimum="0" maximum="1"/>
       <config>
         <relationship>system:reference</relationship>
         <allowType>no.iskald.payup.store:customer</allowType>

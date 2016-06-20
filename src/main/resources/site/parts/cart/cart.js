@@ -3,7 +3,7 @@ var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
 
 exports.get = function (req) {
-  var context = payup.context();
+  var context = payup.context(req);
   var checkoutUrl = portal.serviceUrl({
     service: "checkout"
   });
