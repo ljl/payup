@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title data-th-text="${pageTitle}">Enonic XP generator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css" />
+</head>
+
+<body>
+    <h1 th:text="${content._id}">Order ID</h1>
+    <h2 th:text="${content.data.status}">Status</h2>
+    <table class="mdl-data-table">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td th:text="${content.data.name}">Name</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>
+                    <div th:text="${content.data.address}">Street address</div>
+                    <span th:text="${content.data.zip}">Zip</span>
+                    <span th:text="${content.data.city}">City</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

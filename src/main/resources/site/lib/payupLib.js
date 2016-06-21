@@ -1,7 +1,5 @@
 var portal = require('/lib/xp/portal'); // Import the portal functions
 var thymeleaf = require('/lib/xp/thymeleaf'); // Import the Thymeleaf rendering function
-var contentLib = require('/lib/xp/content');
-var authLib = require('/lib/xp/auth');
 var cartLib = require('cartLib');
 var customerLib = require('customerLib');
 
@@ -20,13 +18,15 @@ function getContext(req) {
   context.cartItems = cartLib.getCartItems(context.cart);
   context.cartItemsTotal = getItemCount(context.cartItems);
   context.cartTotal = getTotalPrice(context.cartItems);
+
   var contextDebug = {
     method: req.method,
     url: req.url,
+    session: req.cookies.JSESSIONID,
     customer: context.customer ? context.customer._name : 'no-customer',
-    cart: context.cart ? context.cart._id : 'no-cart',
-
+    cart: context.cart ? context.cart._id : 'no-cart'
   };
+
   log.info("**** CONTEXT ****");
   log.info(JSON.stringify(contextDebug, null, 2));
   return context;

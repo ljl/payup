@@ -8,7 +8,7 @@
       <label>User key</label>
       <occurrences minimum="1" maximum="1"/>
     </input>
-    <field-set name="address">
+    <field-set name="customerAddress">
       <label>Address</label>
       <items>
         <input type="TextLine" name="name">

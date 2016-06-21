@@ -4,27 +4,6 @@
   <super-type>base:structured</super-type>
   <allow-child-content>true</allow-child-content>
   <form>
-    <field-set name="shipping">
-      <label>Ship to</label>
-      <items>
-        <input type="TextLine" name="name">
-          <label>Name</label>
-          <occurrences minimum="1" maximum="1"/>
-        </input>
-        <input type="TextLine" name="address">
-          <label>Address</label>
-          <occurrences minimum="1" maximum="1"/>
-        </input>
-        <input type="TextLine" name="zip">
-          <label>Zip code</label>
-          <occurrences minimum="1" maximum="1"/>
-        </input>
-        <input type="TextLine" name="city">
-          <label>City</label>
-          <occurrences minimum="1" maximum="1"/>
-        </input>
-      </items>
-    </field-set>
     <input type="ContentSelector" name="customer">
       <label>Customer</label>
       <occurrences minimum="0" maximum="1"/>
@@ -33,9 +12,30 @@
         <allowType>no.iskald.payup.store:customer</allowType>
       </config>
     </input>
+    <field-set name="shipping">
+      <label>Address</label>
+      <items>
+        <input type="TextLine" name="name">
+          <label>Name</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="address">
+          <label>Address</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="zip">
+          <label>Zip code</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="city">
+          <label>City</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+      </items>
+    </field-set>
     <input type="ContentSelector" name="cart">
       <label>Cart</label>
-      <occurrences minimum="1" maximum="1"/>
+      <occurrences minimum="0" maximum="1"/>
       <config>
         <relationship>system:reference</relationship>
         <allowType>no.iskald.payup.store:cart</allowType>

@@ -116,7 +116,7 @@ function getCartFromCustomer(customer) {
       'no.iskald.payup.store:cart'
     ]
   });
-  log.info(JSON.stringify(cartResult, null, 2));
+
   if (cartResult.count > 1) {
     log.error("Multiple carts found for customer " + customer._id);
   }
