@@ -20,10 +20,15 @@ function getContext(req) {
   context.cartItems = cartLib.getCartItems(context.cart);
   context.cartItemsTotal = getItemCount(context.cartItems);
   context.cartTotal = getTotalPrice(context.cartItems);
+  var contextDebug = {
+    method: req.method,
+    url: req.url,
+    customer: context.customer ? context.customer._name : 'no-customer',
+    cart: context.cart ? context.cart._id : 'no-cart',
 
+  };
   log.info("**** CONTEXT ****");
-  log.info(JSON.stringify(req, null, 2));
-  log.info(JSON.stringify(context, null, 2));
+  log.info(JSON.stringify(contextDebug, null, 2));
   return context;
 }
 

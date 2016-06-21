@@ -53,22 +53,6 @@ function getCheckout(req) {
   }
 }
 
-function clearOrders(context) {
-  var orderResult = contentLib.query({
-    query: "data.customer = '" + context.customer._id + "'",
-    contentTypes: [
-      'no.iskald.payup.store:order'
-    ]
-  });
-  log.info("**** ORDER *****");
-  log.info(JSON.stringify(orderResult, null, 2));
-  orderResult.hits.forEach(function (o) {
-    contentLib.delete({
-      key: o._id
-    })
-  });
-}
-
 function doCheckout(req) {
   log.info("*** Performing checkout");
   var context = payup.context(req);
@@ -102,7 +86,7 @@ function doCheckout(req) {
 function getAddress(customer, data) {
   var shippingAddress = {};
   if (customer) {
-    var updatedCustomer = customerLib.updateAddress(context.customer, data);
+    var updatedCustomer = customerLib.updateAddress(customer, data);
     shippingAddress.name = updatedCustomer.name;
     shippingAddress.address = updatedCustomer.address;
     shippingAddress.zip = updatedCustomer.zip;

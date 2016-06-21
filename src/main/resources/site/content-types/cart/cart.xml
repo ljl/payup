@@ -4,10 +4,6 @@
   <super-type>base:structured</super-type>
   <allow-child-content>true</allow-child-content>
   <form>
-    <input type="TextLine" name="name">
-      <label>Name</label>
-      <occurrences minimum="1" maximum="1"/>
-    </input>
     <input type="TextLine" name="session">
       <label>Session</label>
       <occurrences minimum="0" maximum="1"/>

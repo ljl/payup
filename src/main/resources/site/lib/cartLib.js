@@ -1,6 +1,5 @@
 var contentLib = require('/lib/xp/content');
-var portal = require('/lib/xp/portal');
-var contextLib = require('/lib/xp/context');
+var contentHelper = require('contentHelper');
 
 exports = {
   getCartFromCustomer: getCartFromCustomer,
@@ -12,9 +11,12 @@ exports = {
 };
 
 function addToCartQuantity(cartId, quantity, productId) {
+  if (!cartId) throw "Cannot add to cart. Missing parameter: cartId";
+  if (!quantity) throw "Cannot add to cart. Missing parameter: quantity";
+  if (!productId) throw "Cannot add to cart. Missing parameter: productId";
+
   function editor(c) {
     var currentData = c.data.items;
-    log.info("HI FROM EDITOR");
 
     if (!currentData) {
       c.data.items = {
@@ -55,13 +57,10 @@ function addToCartQuantity(cartId, quantity, productId) {
     return c;
   }
 
-  contentLib.modify({
-    key: cartId,
-    editor: editor,
-    branch: 'draft'
+  contentHelper.modifyContent({
+    id: cartId,
+    editor: editor
   });
-
-  contentLib.publish({keys: [cartId], sourceBranch: 'draft', targetBranch: 'master'});
 }
 
 
@@ -102,13 +101,10 @@ function removeFromCart(cartId, quantity, productId) {
     return c;
   }
 
-  contentLib.modify({
-    key: cartId,
-    editor: editor,
-    branch: 'draft'
+  contentHelper.modifyContent({
+    id: cartId,
+    editor: editor
   });
-
-  contentLib.publish({keys: [cartId], sourceBranch: 'draft', targetBranch: 'master'});
 }
 
 function getCartFromCustomer(customer) {
@@ -155,64 +151,31 @@ function getCartFromSession(sessionId) {
 
 function createCartForSession(sessionId) {
   if (!sessionId) throw "Cannot create cart. Missing parameter: sessionId";
-  var site = portal.getSite();
-  try {
-    
-    var cart = contextLib.run({
-      branch: 'draft',
-      user: {
-        login: 'su',
-        userStore: 'system'
-      }
-    }, function() {
-      var c = contentLib.create({
-        name: 'Cart - ' + sessionId,
-        parentPath: site._path + '/shopping-carts',
-        displayName: 'Cart for ' + sessionId,
-        contentType: 'no.iskald.payup.store:cart',
-        branch: 'draft',
-        data: {
-          name: 'Cart for ' + sessionId,
-          session: sessionId
-        }
-      });
-      contentLib.publish({keys: [c._id], sourceBranch: 'draft', targetBranch: 'master'});
-    });
-
-  } catch (e) {
-    if (e.code == 'contentAlreadyExists') {
-      log.error('There is already a content with that name');
-    } else {
-      log.error('Unexpected error: ' + e.message);
+  var params = {
+    name: 'cart-' + sessionId,
+    displayName: 'sessioncart-' + sessionId,
+    path: '/shopping-carts',
+    type: 'cart',
+    data: {
+      session: sessionId
     }
-  }
-
+  };
+  var cart = contentHelper.createContent(params);
   return cart;
 }
 
 function createCartForCustomer(customer) {
   if (!customer) throw "Cannot create cart. Missing parameter: customer";
-  var site = portal.getSite();
-  try {
-    var cart = contentLib.create({
-      name: 'Cart - ' + customer.displayName,
-      parentPath: site._path + '/shopping-carts',
-      displayName: 'Cart for ' + customer.displayName,
-      contentType: 'no.iskald.payup.store:cart',
-      branch: 'draft',
-      data: {
-        name: 'Cart for ' + customer.displayName,
-        customer: customer._id
-      }
-    });
-    contentLib.publish({keys: [cart._id], sourceBranch: 'draft', targetBranch: 'master'});
-  } catch (e) {
-    if (e.code == 'contentAlreadyExists') {
-      log.error('There is already a content with that name');
-    } else {
-      log.error('Unexpected error: ' + e.message);
+  var params = {
+    name: 'cart-' + customer.displayName,
+    displayName: 'usercart-' + customer.displayName,
+    path: '/shopping-carts',
+    type: 'cart',
+    data: {
+      customer: customer._id
     }
-  }
+  };
+  var cart = contentHelper.createContent(params);
 
   return cart;
 }
@@ -240,17 +203,5 @@ function getCartItems(cart) {
 }
 
 function archiveCart(cartId) {
-  contextLib.run({
-    branch: 'draft',
-    user: {
-      login: 'su',
-      userStore: 'system'
-    }
-  }, function() {
-    contentLib.delete({
-      key: cartId,
-      branch: 'draft'
-    });
-    contentLib.publish({keys: [cartId], sourceBranch: 'draft', targetBranch: 'master'});
-  });
+  contentHelper.deleteContent(cartId);
 }
