@@ -6,122 +6,111 @@
 
 
     function stripeResponseHandler(status, response) {
-        var paymentForm = document.getElementById('payment-form');
-        var formData = new FormData(paymentForm);
-        formData.append('token', response.id);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', completeCheckoutUrl, true);
-        xhr.send(formData);
-        xhr.onreadystatechange = function(e) {
-            var DONE = 4;
-            if (xhr.readyState === DONE) {
-                if (xhr.status === 200) {
-                    document.querySelector('.payup-payment').style = "display:none;";
-                    document.getElementById('payment-result').innerHTML = e.target.response;
+        if (status != 200) {
+            document.getElementById('payment-result').innerHTML = response;
+        } else {
+            var paymentForm = document.getElementById('payment-form');
+            var formData = new FormData(paymentForm);
+            formData.append('token', response.id);
+            console.log(formData);
+            var xhr = new XMLHttpRequest();
+            console.log(completeCheckoutUrl);
+            xhr.open('POST', completeCheckoutUrl, true);
+            console.log(xhr);
+            xhr.send(formData);
+            xhr.onreadystatechange = function (e) {
+                var DONE = 4;
+                if (xhr.readyState === DONE) {
+                    if (xhr.status === 200) {
+                        document.querySelector('.payup-payment').style = "display:none;";
+                        document.getElementById('payment-result').innerHTML = e.target.response;
+                    }
+                    if (xhr.status === 500) {
+                        document.getElementById('payment-result').innerHTML = "Backend server error";
+                    }
                 }
-                if (xhr.status === 500) {
-                    document.getElementById('payment-result').innerHTML = "Backend server error";
-                }
-            }
-            refreshCart();
-        };
+                refreshCart();
+            };
+        }
     }
 
     Stripe.setPublishableKey(publishableKey);
     var paymentForm = document.getElementById('payment-form');
-    paymentForm.addEventListener('submit', function(event) {
+    paymentForm.addEventListener('submit', function (event) {
         console.log("submitting");
-        Stripe.card.createToken(paymentForm, stripeResponseHandler);
+        console.log(Stripe.card.createToken(paymentForm, stripeResponseHandler));
         document.getElementById('payment-result').innerHTML = 'Paying up! Hold on...'
         event.preventDefault();
     });
 </script>
 <div class="payup-checkout-wrapper">
     <h3>Checkout</h3>
-    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
-            <tr>
-                <th>Quantity</th>
-                <th>Item</th>
-                <th>Price</th>
-            </tr>
+        <tr>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th>Price</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="item : ${items}" class="cart-item" href="">
-                <td th:text="${item.quantity}">QTY</td>
-                <td th:text="${item.product.displayName}">Product</td>
-                <td th:text="${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}">Price</td>
-            </tr>
-            <tr class="cart-total">
-                <td class="text">Total</td>
-                <td></td>
-                <td class="value" th:text="${currency} + ' ' + ${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</td>
-            </tr>
+        <tr th:each="item : ${items}" class="cart-item" href="">
+            <td th:text="${item.quantity}">QTY</td>
+            <td th:text="${item.product.displayName}">Product</td>
+            <td th:text="${#numbers.formatDecimal(item.price, 1, 2, 'COMMA')}">Price</td>
+        </tr>
+        <tr class="cart-total">
+            <td class="text">Total</td>
+            <td></td>
+            <td class="value" th:text="${currency} + ' ' + ${#numbers.formatDecimal(totalPrice, 1, 2, 'COMMA')}">1234</td>
+        </tr>
         </tbody>
     </table>
 
     <div class="payup-payment">
         <form action="" method="POST" id="payment-form">
-        <h4>Shipment details</h4>
-            <div class="payup-form-row">
-                <label>
-                    <span>Name</span>
-                </label>
-                <input type="text" name="name" value="Lasse JL" />
+            <h4>Shipment details</h4>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="shipping-name" name="name" value="Lasse JL"/>
+                <label class="mdl-textfield__label" for="shipping-name">Name</label>
             </div>
-            <div class="payup-form-row">
-                <label>
-                    <span>Street Address</span>
-                </label>
-                <input type="text" name="address" value="Motzfeldsgt 8" />
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="shipping-address" name="address" value="Motzfeldtsgt 8"/>
+                <label class="mdl-textfield__label" for="shipping-address">Address</label>
             </div>
-            <div class="payup-form-row">
-                <label>
-                    <span>Zip code</span>
-                </label>
-                <input type="text" name="zip" value="0123" />
+            <div class="payup-checkout-zip mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="shipping-zip" name="zip" value="0123"/>
+                <label class="mdl-textfield__label" for="shipping-zip">Zip code</label>
             </div>
-            <div class="payup-form-row">
-                <label>
-                    <span>City</span>
-                </label>
-                <input type="text" name="city" value="Oslo" />
-            </div>
-        <h4>Payment details</h4>
-
-            <div class="payup-form-row">
-                <label>
-                    <span th:text="${i18n.cardholdername}">Card Holder name</span>
-                </label>
-                <input type="text" data-stripe="name" value="Lasse JL" />
-            </div>
-            <div class="payup-form-row">
-                <label>
-                    <span th:text="${i18n.cardnumber}">Card Number</span>
-                </label>
-                <input type="text" size="20" data-stripe="number" value="4242424242424242" />
+            <div class="payup-checkout-city mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="shipping-city" name="city" value="Oslo"/>
+                <label class="mdl-textfield__label" for="shipping-city">City</label>
             </div>
 
-            <div class="payup-form-row">
-                <label>
-                    <span th:text="${i18n.expiration}">Expiration (MM/YY)</span>
-                </label>
-                <span>
-                  <input type="text" size="2" data-stripe="exp_month" value="10" />
-                  <span> / </span>
-                <input type="text" size="2" data-stripe="exp_year" value="20" />
-                </span>
+            <h4>Payment details</h4>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="card-name" data-stripe="name" value="Lasse JL"/>
+                <label class="mdl-textfield__label" for="card-name" th:text="${i18n.cardholdername}">Cart Holder Name</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="card-number" data-stripe="number" value="4242424242424242"/>
+                <label class="mdl-textfield__label" for="card-number" th:text="${i18n.cardnumber}">Cart Number</label>
+            </div>
+            <div class="payup-checkout-expiration mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="card-exp_month" data-stripe="exp_month" value="10"/>
+                <label class="mdl-textfield__label" for="card-exp_month">Expiration month</label>
+            </div>
+            <div class="payup-checkout-expiration mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="card-exp_year" data-stripe="exp_year" value="20"/>
+                <label class="mdl-textfield__label" for="card-exp_year">Expiration Year</label>
+            </div>
+            <div class="payup-checkout-cvc mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="card-cvc" data-stripe="cvc" value="123"/>
+                <label class="mdl-textfield__label" for="card-cvc">CVC</label>
             </div>
 
-            <div class="payup-form-row">
-                <label>
-                    <span>CVC</span>
-                </label>
-                <input type="text" size="4" data-stripe="cvc" value="123" />
-            </div>
-
-            <div class="mdl-dialog__actions">
-                <input class="mdl-button submit mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Purchase" />
+            <div class="payup-checkout-actions mdl-dialog__actions">
+                <input class="mdl-button submit mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Purchase"/>
                 <button class="mdl-button payup-checkout-close">Cancel</button>
             </div>
         </form>

@@ -1,25 +1,7 @@
+@import 'variables';
 @import 'layout';
 @import 'header';
 @import 'cart';
 @import 'product-list';
 @import 'checkout';
 @import 'order';
-.payup-toggle-cart-button {
-  position: absolute;
-  right: 0;
-  top: 10px;
-  z-index: 1000;
-  color: white;
-  span {
-    padding-right: 10px;
-    font-size: 16px;
-  }
-  .active & {
-    span {
-      display: none;
-    }
-    i {
-      color: black;
-    }
-  }
-}

@@ -19,4 +19,10 @@
       </items>
     </field-set>
   </config>
+
+  <mappings>
+    <mapping controller="/site/pages/order/order.js">
+      <match>type:'no.iskald.payup.store:order'</match>
+    </mapping>
+  </mappings>
 </site>

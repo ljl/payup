@@ -24,6 +24,7 @@ $(function () {
     console.log(checkoutUrl);
     $.get(checkoutUrl).done(function (data) {
       $("#payup-checkout-modal").html(data);
+      componentHandler.upgradeAllRegistered();
     });
   });
 

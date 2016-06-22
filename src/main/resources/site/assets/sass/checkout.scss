@@ -1,46 +1,48 @@
+#payup-checkout-modal {
+  display: none;
+  position: absolute;
+  background: white;
+  top: 5%;
+  left: calc(50% - 160px);
+  z-index: 100;
+  width: 320px;
+  padding:24px;
+  h3 {
+    margin-top: 0;
+  }
+}
+
 .payup-checkout-wrapper {
   table {
     width: 100%;
   }
   .cart-total {
-    font-weight:bold;
+    font-weight: bold;
     .value {
       text-transform: uppercase;
     }
   }
+  #payment-form {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    h4 {
+      font-size: 18px;
+      line-height: 18px;
+      font-weight: 100;
+    }
+    .payup-checkout-zip, .payup-checkout-expiration, .payup-checkout-cvc {
+      width: 100px;
+    }
+    .payup-checkout-city {
+      width: 200px;
+    }
+  }
+
+  .payup-checkout-actions {
+    width: 100%;
+  }
 }
 
-.payup-checkout-wrapper input[type='submit'] {
-  color: white;
-}
 
-.payup-items {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-}
 
-.payup-items .payup-total {
-  font-weight: bold;
-}
-
-.payup-items li {
-  display: flex;
-  justify-content: space-between;
-}
-
-#payment-form {
-  display:flex;
-  flex-direction: column;
-  width: 300px;
-}
-
-#payment-form .payup-form-row {
-  display:flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-#payment-form .form-row label {
-  flex-basis: 50%;
-}

@@ -7,10 +7,9 @@ var customerLib = require('customerLib');
 var cartLib = require('cartLib');
 var stripe = __.newBean("no.iskald.payup.StripeCharger");
 
-exports = {
-    post: doCheckout,
-    get: getCheckout
-};
+
+exports.get = getCheckout;
+exports.post = doCheckout;
 
 function getCheckout(req) {
     var context = payup.context(req);
@@ -36,6 +35,7 @@ function getCheckout(req) {
 }
 
 function doCheckout(req) {
+    log.info("doing checkout");
     var context = payup.context(req);
     var shippingAddress = getAddress(context.customer, req.params);
     var order = orderLib.createOrder(context.cart, shippingAddress, context.cartTotal);
