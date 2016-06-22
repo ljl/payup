@@ -6,7 +6,8 @@ exports = {
     list: list,
     deleteContent: deleteContent,
     createContent: createContent,
-    modifyContent: modifyContent
+    modifyContent: modifyContent,
+    contentCount: contentCount
 };
 
 function list(contentListCsv) {
@@ -97,3 +98,17 @@ function modifyContent(params) {
     });
 }
 
+function contentCount(params) {
+    if (!params) throw "Cannot create content. Missing parameter: params";
+    if (!params.type) throw "Cannot create content. Missing parameter: type";
+
+    var result = contentLib.query({
+        query: "",
+        branch: 'draft',
+        contentTypes: [
+            'no.iskald.payup.store:' + params.type
+        ]
+    });
+    
+    return result.total;
+}

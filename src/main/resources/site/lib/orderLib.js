@@ -1,4 +1,3 @@
-var portal = require('/lib/xp/portal');
 var contentHelper = require('contentHelper');
 
 exports = {
@@ -7,11 +6,10 @@ exports = {
 };
 
 function createOrderFromCart(cart, shippingAddress, amount) {
-    var orderName = getDate();
-
+    var orderId = getOrderId();
     var params = {
-        name: orderName,
-        displayName: orderName,
+        name: orderId,
+        displayName: orderId,
         type: 'order',
         path: '/orders',
         data: {
@@ -43,11 +41,12 @@ function updateOrderStatus(orderId, status) {
     contentHelper.modifyContent(params);
 }
 
-function getDate() {
+function getOrderId() {
+    var count = contentHelper.contentCount({
+        type: 'order'
+    });
     var date = new Date();
-    var day = date.getDate();
-    var monthIndex = date.getMonth() + 1;
-    var year = date.getFullYear();
+    
 
-    return day + '-' + monthIndex + '-' + year + '-' + date.getMilliseconds();
+    return count + "" + date.getMilliseconds();
 }

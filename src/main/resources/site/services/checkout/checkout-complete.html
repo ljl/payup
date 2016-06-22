@@ -1,8 +1,7 @@
 <div class="payup-order"  th:classappend="${charge.status}">
     <h4>Order complete</h4>
-    <div class="payup-order-id" th:text="'Order ID:' + ${order._id}">Order ID</div>
-    <div class="payup-order-name" th:text="${order.displayName}">Order name</div>
-    <div class="payup-order-status" th:text="'Payment status:' + ${charge.status}">Success</div>
+    <div class="payup-order-id" th:text="'Order ID: ' + ${order.displayName}">Order ID</div>
+    <div class="payup-order-status" th:text="'Payment status: ' + ${charge.status}">Success</div>
     <div class="mdl-dialog__actions">
         <button class="payup-checkout-close mdl-button">Close</button>
     </div>

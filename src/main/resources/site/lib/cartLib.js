@@ -129,7 +129,7 @@ function getCartFromCustomer(customer) {
 }
 
 function getCartFromSession(sessionId) {
-  if (!sessionId) throw "Cannot get cart. Missing parameter: sessionId";
+  if (!sessionId) return;
   var cartResult = contentLib.query({
     query: "data.session = '" + sessionId + "'",
     branch: 'draft',
@@ -139,7 +139,8 @@ function getCartFromSession(sessionId) {
   });
 
   if (cartResult.count > 1) {
-    log.error("Multiple carts found for session " + sessionId);
+    log.error("Multiple carts found for session " + sessionId + ". Returning first.");
+    return cartResult.hits[0]
   }
 
   if (cartResult.count == 1) {
