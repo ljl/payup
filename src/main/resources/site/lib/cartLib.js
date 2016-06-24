@@ -111,7 +111,6 @@ function getCartFromCustomer(customer) {
   if (!customer && !customer._id) throw "Cannot get cart. Missing parameter: customer";
   var cartResult = contentLib.query({
     query: "data.customer = '" + customer._id + "'",
-    branch: 'draft',
     contentTypes: [
       'no.iskald.payup.store:cart'
     ]
@@ -132,7 +131,6 @@ function getCartFromSession(sessionId) {
   if (!sessionId) return;
   var cartResult = contentLib.query({
     query: "data.session = '" + sessionId + "'",
-    branch: 'draft',
     contentTypes: [
       'no.iskald.payup.store:cart'
     ]

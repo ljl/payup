@@ -24,6 +24,7 @@ function list(contentListCsv) {
 }
 
 function deleteContent(contentId) {
+    var branch = contextLib.get().branch;
     contextLib.run({
         branch: 'draft',
         user: {
@@ -35,7 +36,7 @@ function deleteContent(contentId) {
             key: contentId,
             branch: 'draft'
         });
-        contentLib.publish({keys: [contentId], sourceBranch: 'draft', targetBranch: 'master'});
+        publish(contentId, branch);
     });
 }
 
@@ -48,7 +49,7 @@ function createContent(params) {
     if (!params.data) throw "Cannot create content. Missing parameter: data";
     var site = portal.getSite();
     try {
-
+        var branch = contextLib.get().branch;
         return contextLib.run({
             branch: 'draft',
             user: {
@@ -64,8 +65,7 @@ function createContent(params) {
                 branch: 'draft',
                 data: params.data
             });
-            contentLib.publish({keys: [c._id], sourceBranch: 'draft', targetBranch: 'master'});
-
+            publish(c._id, branch);
             return c;
         });
     } catch (e) {
@@ -81,7 +81,7 @@ function modifyContent(params) {
     if (!params) throw "Cannot create content. Missing parameter: params";
     if (!params.id) throw "Cannot create content. Missing parameter: id";
     if (!params.editor) throw "Cannot create content. Missing parameter: editor";
-
+    var branch = contextLib.get().branch;
     return contextLib.run({
         branch: 'draft',
         user: {
@@ -94,7 +94,7 @@ function modifyContent(params) {
             editor: params.editor,
             branch: 'draft'
         });
-        contentLib.publish({keys: [c._id], sourceBranch: 'draft', targetBranch: 'master'});
+        publish(c._id, branch);
     });
 }
 
@@ -109,6 +109,14 @@ function contentCount(params) {
             'no.iskald.payup.store:' + params.type
         ]
     });
-    
+
     return result.total;
+}
+
+function publish(key, branch) {
+
+    log.info("**** Branch -> " + branch);
+    if (branch == 'master') {
+        contentLib.publish({keys: [key], sourceBranch: 'draft', targetBranch: 'master'});
+    }
 }

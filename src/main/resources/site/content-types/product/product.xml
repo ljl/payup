@@ -41,13 +41,17 @@
       <field-set name="meta">
         <label>Metadata</label>
         <items>
+          <input type="TextLine" name="weight">
+            <label>Weight</label>
+            <occurrences minimum="0" maximum="1"/>
+          </input>
         <input type="TextLine" name="sku">
           <label>SKU</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="manufacturerId">
-          <label>ManufacturerId</label>
-          <occurrences minimum="1" maximum="1"/>
+          <label>Manufacturer id</label>
+          <occurrences minimum="0" maximum="1"/>
         </input>
         </items>
       </field-set>
