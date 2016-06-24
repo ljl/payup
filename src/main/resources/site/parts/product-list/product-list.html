@@ -1,5 +1,5 @@
 <div class="product-list">
-    <h2>Products</h2>
+    <h2 th:text="${config.title}">Products</h2>
     <div class="products">
         <div class="product mdl-card mdl-shadow--2dp" th:each="product : ${products}">
             <div class="mdl-card__title mdl-card--expand" th:style="'background:url(' + ${product.imageUrl} + ') center / cover;'">

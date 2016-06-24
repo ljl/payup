@@ -1,7 +1,7 @@
 <part>
   <display-name>PayUp! Product list</display-name>
   <config>
-      <input type="TextLine" name="Title">
+      <input type="TextLine" name="title">
         <label>Title</label>
         <occurrences minimum="0" maximum="1"/>
       </input>

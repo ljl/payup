@@ -34,6 +34,10 @@ function deleteContent(contentId) {
     }, function () {
         contentLib.delete({
             key: contentId,
+            branch: 'master'
+        });
+        contentLib.delete({
+            key: contentId,
             branch: 'draft'
         });
         publish(contentId, branch);
