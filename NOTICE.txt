@@ -1,0 +1,16 @@
+Licenses used by PayUp!
+
+Javascript library licenses used by this product:
+
+    JQuery
+    MIT License
+    https://jquery.org/license/
+
+    Material Design Lite
+    Apache 2.0
+    https://github.com/google/material-design-lite/blob/master/LICENSE
+
+Artwork licenses used by this product:
+
+    Icons by FreePik
+    http://file000.flaticon.com/downloads/license/license.pdf

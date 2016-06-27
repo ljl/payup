@@ -41,7 +41,7 @@ function doCheckout(req) {
     var order = orderLib.createOrder(context.cart, shippingAddress, context.cartTotal);
     var secretApiKey = portal.getSiteConfig().secretKey;
     var currency = portal.getSiteConfig().currency;
-    var charge = stripe.chargeCard(secretApiKey, req.params.token, context.cartTotal, context.cart.displayName, currency);
+    var charge = stripe.chargeCard(secretApiKey, req.params.token, context.cartTotal, 'Order ID:' + order.displayName, currency);
 
     var template;
     if (charge.status == "succeeded") {
