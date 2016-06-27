@@ -1,5 +1,3 @@
-var portal = require('/lib/xp/portal'); // Import the portal functions
-var thymeleaf = require('/lib/xp/thymeleaf'); // Import the Thymeleaf rendering function
 var cartLib = require('cartLib');
 var customerLib = require('customerLib');
 
@@ -18,6 +16,7 @@ function getContext(req) {
   context.cartItems = cartLib.getCartItems(context.cart);
   context.cartItemsTotal = getItemCount(context.cartItems);
   context.cartTotal = getTotalPrice(context.cartItems);
+  context.req = req;
 
   var contextDebug = {
     method: req.method,

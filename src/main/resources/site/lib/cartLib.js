@@ -7,7 +7,8 @@ exports = {
   addToCartQuantity: addToCartQuantity,
   removeFromCart: removeFromCart,
   getCartItems: getCartItems,
-  archiveCart: archiveCart
+  archiveCart: archiveCart,
+  createCart: createCart
 };
 
 function addToCartQuantity(cartId, quantity, productId) {
@@ -124,7 +125,7 @@ function getCartFromCustomer(customer) {
     return cartResult.hits[0];
   }
 
-  return createCartForCustomer(customer);
+  return null;
 }
 
 function getCartFromSession(sessionId) {
@@ -145,7 +146,19 @@ function getCartFromSession(sessionId) {
     return cartResult.hits[0];
   }
 
-  return createCartForSession(sessionId);
+  return null;
+}
+
+function createCart(context) {
+  if (context.cart != null) {
+    log.error("Not creating new cart, cart already exists in context");
+    return;
+  }
+  if (context.customer) {
+    return createCartForCustomer(customer)
+  } else {
+    return createCartForSession(context.req.cookies.JSESSIONID)
+  }
 }
 
 function createCartForSession(sessionId) {

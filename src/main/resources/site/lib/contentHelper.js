@@ -33,12 +33,7 @@ function deleteContent(contentId) {
         }
     }, function () {
         contentLib.delete({
-            key: contentId,
-            branch: 'master'
-        });
-        contentLib.delete({
-            key: contentId,
-            branch: 'draft'
+            key: contentId
         });
         publish(contentId, branch);
     });
