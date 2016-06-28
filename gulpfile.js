@@ -14,12 +14,4 @@ gulp.task('sass', function () {
     .pipe(gulp.dest(assetsPath + 'css'));
 });
 
-gulp.task('scripts', function () {
-  console.error('scripts task not implemented yet');
-});
-
-gulp.task('styles', function () {
-  console.error('styles task not implemented yet');
-});
-
-gulp.task('build', ['scripts', 'sass']);
+gulp.task('build', ['sass']);
