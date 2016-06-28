@@ -14,3 +14,7 @@ Artwork licenses used by this product:
 
     Icons by FreePik
     http://file000.flaticon.com/downloads/license/license.pdf
+
+    Images by Unsplash
+    Creative Commons Zero
+    https://unsplash.com/license
