@@ -15,6 +15,8 @@ Test cards can be located here: https://stripe.com/docs/testing
 ## Orders
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
+##Changelog
+
 
 ##Roadmap
 
@@ -30,3 +32,5 @@ When a order is complete, it can be viewed in admin with shipping details and co
 - Stock quantity on products
 - Send shipment data to Stripe
 - Customer pages with order history
+- Selenium testing
+- Modularize payment, add more providers

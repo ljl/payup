@@ -30,7 +30,6 @@ function getProducts(config) {
             ]
         }).hits;
     } else {
-
         products = contentHelper.list(config.item);
     }
 
