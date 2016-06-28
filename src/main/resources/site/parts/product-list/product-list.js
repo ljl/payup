@@ -4,7 +4,6 @@ var thymeleaf = require('/lib/xp/thymeleaf');
 var portal = require('/lib/xp/portal');
 
 exports.get = function (req) {
-    log.info("***** Product List");
     var currency = portal.getSiteConfig().currency;
     var config = portal.getComponent().config;
 
@@ -23,7 +22,7 @@ exports.get = function (req) {
 
 function getProducts(config) {
     var products;
-    
+
     if (!config || !config.item) {
         products = contentLib.query({
             contentTypes: [

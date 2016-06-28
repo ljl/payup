@@ -23,7 +23,6 @@ exports.get = function (req) {
 
 function appendRemoveFromCartLink(items) {
   items.forEach(function (item) {
-    log.info(JSON.stringify(item));
     item.removeFromCart = portal.serviceUrl({
       service: 'cart',
       params: {

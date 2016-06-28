@@ -12,7 +12,7 @@
 
 <body>
     <header class="payup-header" th:style="'background: url(' + ${portal.assetUrl({'_path=img/store.jpg'})} + ') center / cover;'" style="background: url('../../assets/img/store.jpg') center / cover;">
-        <h1>PayUp!</h1>
+        <h1 th:text="${siteName}">PayUp!</h1>
     </header>
 
     <main data-th-attr="data-portal-region=${mainRegion.name}">

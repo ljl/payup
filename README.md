@@ -18,6 +18,7 @@ When a order is complete, it can be viewed in admin with shipping details and co
 
 ##Roadmap
 
+- Validation of checkout form
 - Registration and login of customers
 - Toggle shipping option in site config
 - Shipping prices

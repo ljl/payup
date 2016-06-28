@@ -11,16 +11,19 @@ var stripe = __.newBean("no.iskald.payup.StripeCharger");
 exports.get = getCheckout;
 exports.post = doCheckout;
 
+
 function getCheckout(req) {
     var context = payup.context(req);
     var view = resolve('checkout.html');
     var currency = portal.getSiteConfig().currency;
+    var shippingDetails = getShippingDetails(context.customer);
 
     var model = {
         cart: context.cart,
         items: context.cartItems,
         currency: currency,
         totalPrice: context.cartTotal,
+        shippingDetails: shippingDetails,
         component: portal.getComponent(),
         completeCheckoutUrl: portal.serviceUrl({
             service: "checkout"
@@ -35,7 +38,6 @@ function getCheckout(req) {
 }
 
 function doCheckout(req) {
-    log.info("doing checkout");
     var context = payup.context(req);
     var shippingAddress = getAddress(context.customer, req.params);
     var order = orderLib.createOrder(context.cart, shippingAddress, context.cartTotal);
@@ -61,7 +63,16 @@ function doCheckout(req) {
         body: thymeleaf.render(template, model)
     }
 }
-
+function getShippingDetails(customer) {
+    var details = {};
+    if (customer && customer.data) {
+        details.name = customer.data.name;
+        details.address = customer.data.address;
+        details.zip = customer.data.zip;
+        details.city = customer.data.city;
+    }
+    return details;
+}
 function getAddress(customer, data) {
     var shippingAddress = {};
     if (customer) {

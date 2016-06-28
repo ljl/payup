@@ -71,41 +71,41 @@
         <form action="" method="POST" id="payment-form">
             <h4>Shipment details</h4>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="shipping-name" name="name" value="Lasse JL"/>
+                <input class="mdl-textfield__input" type="text" id="shipping-name" name="name" th:value="${shippingDetails.name}"/>
                 <label class="mdl-textfield__label" for="shipping-name">Name</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="shipping-address" name="address" value="Motzfeldtsgt 8"/>
+                <input class="mdl-textfield__input" type="text" id="shipping-address" name="address" th:value="${shippingDetails.address}"/>
                 <label class="mdl-textfield__label" for="shipping-address">Address</label>
             </div>
             <div class="payup-checkout-zip mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="shipping-zip" name="zip" value="0123"/>
+                <input class="mdl-textfield__input" type="text" id="shipping-zip" name="zip" th:value="${shippingDetails.zip}"/>
                 <label class="mdl-textfield__label" for="shipping-zip">Zip code</label>
             </div>
             <div class="payup-checkout-city mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="shipping-city" name="city" value="Oslo"/>
+                <input class="mdl-textfield__input" type="text" id="shipping-city" name="city" th:value="${shippingDetails.city}"/>
                 <label class="mdl-textfield__label" for="shipping-city">City</label>
             </div>
 
             <h4>Payment details</h4>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="card-name" data-stripe="name" value="Lasse JL"/>
+                <input class="mdl-textfield__input" type="text" id="card-name" data-stripe="name"/>
                 <label class="mdl-textfield__label" for="card-name" th:text="${i18n.cardholdername}">Cart Holder Name</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="card-number" data-stripe="number" value="4242424242424242"/>
+                <input class="mdl-textfield__input" type="text" id="card-number" data-stripe="number"/>
                 <label class="mdl-textfield__label" for="card-number" th:text="${i18n.cardnumber}">Cart Number</label>
             </div>
             <div class="payup-checkout-expiration mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="card-exp_month" data-stripe="exp_month" value="10"/>
+                <input class="mdl-textfield__input" type="text" id="card-exp_month" data-stripe="exp_month"/>
                 <label class="mdl-textfield__label" for="card-exp_month">Expiration month</label>
             </div>
             <div class="payup-checkout-expiration mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="card-exp_year" data-stripe="exp_year" value="20"/>
+                <input class="mdl-textfield__input" type="text" id="card-exp_year" data-stripe="exp_year"/>
                 <label class="mdl-textfield__label" for="card-exp_year">Expiration Year</label>
             </div>
             <div class="payup-checkout-cvc mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="card-cvc" data-stripe="cvc" value="123"/>
+                <input class="mdl-textfield__input" type="text" id="card-cvc" data-stripe="cvc"/>
                 <label class="mdl-textfield__label" for="card-cvc">CVC</label>
             </div>
 
