@@ -33,14 +33,6 @@
         </input>
       </items>
     </field-set>
-    <input type="ContentSelector" name="cart">
-      <label>Cart</label>
-      <occurrences minimum="0" maximum="1"/>
-      <config>
-        <relationship>system:reference</relationship>
-        <allowType>no.iskald.payup.store:cart</allowType>
-      </config>
-    </input>
     <item-set name="items">
       <label>Products</label>
       <items>
