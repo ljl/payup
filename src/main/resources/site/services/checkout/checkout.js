@@ -14,27 +14,38 @@ exports.post = doCheckout;
 
 function getCheckout(req) {
     var context = payup.context(req);
-    var view = resolve('checkout.html');
     var currency = portal.getSiteConfig().currency;
     var shippingDetails = getShippingDetails(context.customer);
+    var publishableKey = portal.getSiteConfig().publishableKey;
+    var secretKey = portal.getSiteConfig().secretKey;
+    var model, view;
 
-    var model = {
-        cart: context.cart,
-        items: context.cartItems,
-        currency: currency,
-        totalPrice: context.cartTotal,
-        shippingDetails: shippingDetails,
-        component: portal.getComponent(),
-        completeCheckoutUrl: portal.serviceUrl({
-            service: "checkout"
-        }),
-        publishableKey: portal.getSiteConfig().publishableKey,
-        i18n: getLocalizedStrings()
-    };
-
+    if (publishableKey && secretKey) {
+        view = resolve('checkout.html');
+        
+        model = {
+            cart: context.cart,
+            items: context.cartItems,
+            currency: currency,
+            totalPrice: context.cartTotal,
+            shippingDetails: shippingDetails,
+            component: portal.getComponent(),
+            completeCheckoutUrl: portal.serviceUrl({
+                service: "checkout"
+            }),
+            publishableKey: publishableKey,
+            i18n: getLocalizedStrings()
+        };
+        
+    } else {
+        view = resolve('checkout-error.html');
+        model = {
+            
+        }
+    }
     return {
         body: thymeleaf.render(view, model)
-    }
+    };
 }
 
 function doCheckout(req) {
