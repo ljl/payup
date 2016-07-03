@@ -50,8 +50,8 @@
             <property-set name="siteConfig">
                 <string name="applicationKey">no.iskald.payup.store</string>
                 <property-set name="config">
-                    <string name="publishableKey">sk_test_qwTTGvg9TSjTMxdii8nzHR3r</string>
-                    <string name="secretKey">pk_test_pNh6gZ9NqA0SlpNblxc3vtAf</string>
+                    <string name="publishableKey"></string>
+                    <string name="secretKey"></string>
                     <string name="currency">nok</string>
                 </property-set>
             </property-set>
