@@ -4,6 +4,8 @@ var view = resolve('error.html');
 
 
 exports.handleError = function (err) {
+    log.error("******* ERROR *********");
+    log.error(JSON.stringify(err, null, 2));
     var debugMode = err.request.params.debug === 'true';
     if (debugMode && err.request.mode === 'preview') {
         return;

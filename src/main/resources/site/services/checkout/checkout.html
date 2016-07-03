@@ -12,11 +12,8 @@
             var paymentForm = document.getElementById('payment-form');
             var formData = new FormData(paymentForm);
             formData.append('token', response.id);
-            console.log(formData);
             var xhr = new XMLHttpRequest();
-            console.log(completeCheckoutUrl);
             xhr.open('POST', completeCheckoutUrl, true);
-            console.log(xhr);
             xhr.send(formData);
             xhr.onreadystatechange = function (e) {
                 var DONE = 4;
@@ -37,8 +34,6 @@
     Stripe.setPublishableKey(publishableKey);
     var paymentForm = document.getElementById('payment-form');
     paymentForm.addEventListener('submit', function (event) {
-        console.log("submitting");
-        console.log(Stripe.card.createToken(paymentForm, stripeResponseHandler));
         document.getElementById('payment-result').innerHTML = 'Paying up! Hold on...'
         event.preventDefault();
     });
