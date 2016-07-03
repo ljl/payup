@@ -12,7 +12,8 @@ exports.handleError = function (err) {
     }
 
     var model = {
-        errorCode: err.status
+        errorCode: err.status,
+        message: err.message
     };
     var body = thymeleaf.render(view, model);
 
