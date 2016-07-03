@@ -14,7 +14,6 @@ function createOrderFromCart(cart, shippingAddress, amount) {
         path: '/orders',
         data: {
             amount: amount,
-            cart: cart._id,
             items: cart.data.items,
             name: shippingAddress.name,
             address: shippingAddress.address,

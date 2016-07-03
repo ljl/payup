@@ -51,9 +51,10 @@ function getCheckout(req) {
 function doCheckout(req) {
     var context = payup.context(req);
     var shippingAddress = getAddress(context.customer, req.params);
-    var order = orderLib.createOrder(context.cart, shippingAddress, context.cartTotal);
     var secretApiKey = portal.getSiteConfig().secretKey;
     var currency = portal.getSiteConfig().currency;
+    var order = orderLib.createOrder(context.cart, shippingAddress, context.cartTotal);
+    if (!order) throw "Could not create order";
     var charge = stripe.chargeCard(secretApiKey, req.params.token, context.cartTotal, 'Order ID:' + order.displayName, currency);
 
     var template;
