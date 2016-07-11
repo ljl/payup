@@ -51,11 +51,6 @@ node {
     download = true
 }
 
-ext {
-    bintrayUser = resolveProperty( 'BINTRAY_USER', 'bintrayUser' )
-    bintrayKey = resolveProperty( 'BINTRAY_KEY', 'bintrayKey' )
-}
-
 gulp {
     // Set the directory where gulpfile.js should be found
     workDir = file("${project.projectDir}")
