@@ -1,22 +1,22 @@
 
 buildscript {
     repositories {
-        mavenLocal()
-        mavenCentral()
         jcenter()
         maven { url 'http://repo.enonic.com/public' }
-        maven { url 'https://plugins.gradle.org/m2/' }
     }
 
     dependencies {
         classpath "com.enonic.xp:gradle-plugin:${xpVersion}"
         classpath 'com.moowork.gradle:gradle-gulp-plugin:0.11'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'com.enonic.xp.app'
 apply plugin: 'com.moowork.gulp'
+apply plugin: 'com.jfrog.bintray'
 
 app {
     name = project.appName
@@ -39,18 +39,9 @@ dependencies {
 }
 
 repositories {
-    mavenLocal()
     jcenter()
     maven {
         url 'http://repo.enonic.com/public'
-    }
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository( url: 'http://repo.enonic.com/artifactory/public' )
-        }
     }
 }
 
@@ -58,6 +49,11 @@ uploadArchives {
 node {
     version = '5.11.0'
     download = true
+}
+
+ext {
+    bintrayUser = resolveProperty( 'BINTRAY_USER', 'bintrayUser' )
+    bintrayKey = resolveProperty( 'BINTRAY_KEY', 'bintrayKey' )
 }
 
 gulp {
@@ -74,3 +70,33 @@ gulp_build.dependsOn 'npmInstall'
 // runs "gulp build" as part of your gradle build
 build.dependsOn gulp_build
 build.mustRunAfter gulp_build
+
+publishing {
+    publications {
+        mavenJava( MavenPublication ) {
+            from components.java
+        }
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayKey
+    publications = ['mavenJava']
+
+    pkg {
+        repo = 'maven'
+        name = 'payup'
+        desc = 'A simple e-commerce store for Enonic XP.'
+        websiteUrl = 'https://github.com/ljl/payup'
+        issueTrackerUrl = 'https://github.com/ljl/payup/issues'
+        vcsUrl = 'https://github.com/ljl/payup.git'
+        licenses = ['Apache-2.0']
+        labels = ['java', 'enonic', 'javascript']
+        publicDownloadNumbers = true
+
+        version {
+            vcsTag = "v$project.version"
+        }
+    }
+}
