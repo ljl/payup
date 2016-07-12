@@ -28,6 +28,8 @@ When a order is complete, it can be viewed in admin with shipping details and co
 #### Removed
 - Cart connection from Order
 - Stripe API-keys from import
+
+
 ##Roadmap
 
 - Validation of checkout form
