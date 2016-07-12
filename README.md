@@ -49,3 +49,6 @@ When a order is complete, it can be viewed in admin with shipping details and co
 - Customer pages with order history
 - Selenium testing
 - Modularize payment, add more providers
+- Use only session for carts
+- Sort out permissions for carts and customers
+- Close checkout by clicking outside
