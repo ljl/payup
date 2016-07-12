@@ -16,8 +16,18 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
-
-
+### [1.0.1] - 2016-07-12
+#### Added
+- Error logging and error pages
+- Error message when api key is missing
+- Smaller images for faster loading
+#### Fixed
+- Application meta data display name
+#### Changed
+- Cart button now has fixed positioning
+#### Removed
+- Cart connection from Order
+- Stripe API-keys from import
 ##Roadmap
 
 - Validation of checkout form
