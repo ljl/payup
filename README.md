@@ -21,10 +21,13 @@ When a order is complete, it can be viewed in admin with shipping details and co
 - Error logging and error pages
 - Error message when api key is missing
 - Smaller images for faster loading
+
 #### Fixed
 - Application meta data display name
+
 #### Changed
 - Cart button now has fixed positioning
+
 #### Removed
 - Cart connection from Order
 - Stripe API-keys from import
