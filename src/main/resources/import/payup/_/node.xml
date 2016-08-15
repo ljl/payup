@@ -48,7 +48,7 @@
         <property-set name="data">
             <string isNull="true" name="description"/>
             <property-set name="siteConfig">
-                <string name="applicationKey">no.iskald.payup.store</string>
+                <string name="applicationKey">no.iskald.payup</string>
                 <property-set name="config">
                     <string name="publishableKey"></string>
                     <string name="secretKey"></string>
@@ -57,7 +57,7 @@
             </property-set>
         </property-set>
         <property-set name="page">
-            <string name="controller">no.iskald.payup.store:default</string>
+            <string name="controller">no.iskald.payup:default</string>
             <reference isNull="true" name="template"/>
             <property-set name="region">
                 <string name="name">main</string>
@@ -65,7 +65,7 @@
                     <string name="type">PartComponent</string>
                     <property-set name="PartComponent">
                         <string name="name">cart</string>
-                        <string name="template">no.iskald.payup.store:cart</string>
+                        <string name="template">no.iskald.payup:cart</string>
                         <property-set name="config"/>
                     </property-set>
                 </property-set>
@@ -73,7 +73,7 @@
                     <string name="type">PartComponent</string>
                     <property-set name="PartComponent">
                         <string name="name">PayUp! Product list</string>
-                        <string name="template">no.iskald.payup.store:product-list</string>
+                        <string name="template">no.iskald.payup:product-list</string>
                         <property-set name="config">
                             <string isNull="true" name="Title"/>
                         </property-set>

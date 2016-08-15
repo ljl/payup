@@ -60,7 +60,7 @@ function createContent(params) {
                 name: params.name,
                 parentPath: site._path + params.path,
                 displayName: params.displayName,
-                contentType: 'no.iskald.payup.store:' + params.type,
+                contentType: 'no.iskald.payup:' + params.type,
                 branch: 'draft',
                 data: params.data
             });
@@ -105,7 +105,7 @@ function contentCount(params) {
         query: "",
         branch: 'draft',
         contentTypes: [
-            'no.iskald.payup.store:' + params.type
+            'no.iskald.payup:' + params.type
         ]
     });
 

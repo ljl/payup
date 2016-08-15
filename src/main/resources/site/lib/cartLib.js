@@ -113,7 +113,7 @@ function getCartFromCustomer(customer) {
   var cartResult = contentLib.query({
     query: "data.customer = '" + customer._id + "'",
     contentTypes: [
-      'no.iskald.payup.store:cart'
+      'no.iskald.payup:cart'
     ]
   });
 
@@ -133,7 +133,7 @@ function getCartFromSession(sessionId) {
   var cartResult = contentLib.query({
     query: "data.session = '" + sessionId + "'",
     contentTypes: [
-      'no.iskald.payup.store:cart'
+      'no.iskald.payup:cart'
     ]
   });
 

@@ -26,7 +26,7 @@ function getProducts(config) {
     if (!config || !config.item) {
         products = contentLib.query({
             contentTypes: [
-                'no.iskald.payup.store:product'
+                'no.iskald.payup:product'
             ]
         }).hits;
     } else {

@@ -49,7 +49,7 @@ function fetchCustomer(userKey) {
         query: "data.userKey = '" + userKey + "'",
         branch: "draft",
         contentTypes: [
-            'no.iskald.payup.store:customer'
+            'no.iskald.payup:customer'
         ]
     });
     if (customerResult.count == 0) return;

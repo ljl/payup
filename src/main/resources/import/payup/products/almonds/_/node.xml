@@ -39,7 +39,7 @@
     <data>
         <boolean name="valid">true</boolean>
         <string name="displayName">Almonds</string>
-        <string name="type">no.iskald.payup.store:product</string>
+        <string name="type">no.iskald.payup:product</string>
         <string name="owner">user:system:su</string>
         <dateTime name="modifiedTime">2016-06-22T10:51:00.803Z</dateTime>
         <string name="modifier">user:system:su</string>

@@ -10,7 +10,7 @@
         <occurrences minimum="1" maximum="0"/>
         <config>
           <relationship-type>system:reference</relationship-type>
-          <allow-content-type>no.iskald.payup.store:product</allow-content-type>
+          <allow-content-type>no.iskald.payup:product</allow-content-type>
         </config>
       </input>
   </config>

@@ -22,7 +22,7 @@
 
   <mappings>
     <mapping controller="/site/pages/order/order.js">
-      <match>type:'no.iskald.payup.store:order'</match>
+      <match>type:'no.iskald.payup:order'</match>
     </mapping>
   </mappings>
 </site>
