@@ -2,6 +2,8 @@
 
 A simple e-commerce store for Enonic XP.
 
+[ ![Download](https://api.bintray.com/packages/ljl/maven/payup/images/download.svg) ](https://bintray.com/ljl/maven/payup/_latestVersion)
+
 ## Shopping carts
 Shopping carts are created when a user adds a item to the cart. Carts will be persisted if user is logged in,
 however no login/registration form is currently implemented.
