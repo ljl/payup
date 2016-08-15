@@ -2,6 +2,7 @@
 
 A simple e-commerce store for Enonic XP.
 
+Download latest version from bintray:
 [ ![Download](https://api.bintray.com/packages/ljl/maven/payup/images/download.svg) ](https://bintray.com/ljl/maven/payup/_latestVersion)
 
 ## Shopping carts
@@ -18,6 +19,10 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
+### [1.0.3] - 2016-08-15
+#### Fixed
+- Stripe Token generator was erroneously removed in a previous version
+
 ### [1.0.2] - 2016-08-15
 #### Fixed
 - In 1.0.1 the application key was changed, but not all references, this is now fixed
