@@ -16,6 +16,10 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
+### [1.0.2] - 2016-08-15
+#### Fixed
+- In 1.0.1 the application key was changed, but not all references, this is now fixed
+
 ### [1.0.1] - 2016-07-12
 #### Added
 - Error logging and error pages
