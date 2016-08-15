@@ -4,7 +4,6 @@
     var publishableKey = /*[[${publishableKey}]]*/ 'value';
     /*]]>*/
 
-
     function stripeResponseHandler(status, response) {
         if (status != 200) {
             document.getElementById('payment-result').innerHTML = response;
@@ -34,6 +33,7 @@
     Stripe.setPublishableKey(publishableKey);
     var paymentForm = document.getElementById('payment-form');
     paymentForm.addEventListener('submit', function (event) {
+        Stripe.card.createToken(paymentForm, stripeResponseHandler);
         document.getElementById('payment-result').innerHTML = 'Paying up! Hold on...'
         event.preventDefault();
     });
