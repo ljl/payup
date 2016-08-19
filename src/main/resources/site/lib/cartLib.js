@@ -154,11 +154,12 @@ function createCart(context) {
     log.error("Not creating new cart, cart already exists in context");
     return;
   }
-  if (context.customer) {
-    return createCartForCustomer(customer)
-  } else {
+  // Customer cart is disabled untill persistent cart is properly implemented
+  //if (context.customer) {
+  //  return createCartForCustomer(customer)
+  //} else {
     return createCartForSession(context.req.cookies.JSESSIONID)
-  }
+  //}
 }
 
 function createCartForSession(sessionId) {

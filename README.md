@@ -19,6 +19,10 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
+### [1.0.4] - 2016-08-19
+#### Removed
+- Customer carts have been temporary disabled due to some inconsistent errors.
+
 ### [1.0.3] - 2016-08-15
 #### Fixed
 - Stripe Token generator was erroneously removed in a previous version
@@ -43,6 +47,9 @@ When a order is complete, it can be viewed in admin with shipping details and co
 - Cart connection from Order
 - Stripe API-keys from import
 
+##Known issues
+- Changing a stored address gives payment error on the first payment 
+attempt. The second attempt stores the address and completes the payment
 
 ##Roadmap
 

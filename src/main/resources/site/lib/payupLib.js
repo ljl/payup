@@ -8,11 +8,12 @@ exports = {
 function getContext(req) {
   var context = {};
   context.customer = customerLib.getCustomer();
-  if (!context.customer) {
+  // CUSTOMER CART DISABLED
+  //if (!context.customer) {
     context.cart = cartLib.getCartFromSession(req.cookies.JSESSIONID);
-  } else {
-    context.cart = cartLib.getCartFromCustomer(context.customer);
-  }
+  //} else {
+  //  context.cart = cartLib.getCartFromCustomer(context.customer);
+  //}
   context.cartItems = cartLib.getCartItems(context.cart);
   context.cartItemsTotal = getItemCount(context.cartItems);
   context.cartTotal = getTotalPrice(context.cartItems);

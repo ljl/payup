@@ -37,7 +37,7 @@
         </principal>
     </permissions>
     <data>
-        <boolean name="valid">true</boolean>
+        <boolean name="valid">false</boolean>
         <string name="displayName">payup</string>
         <string name="type">portal:site</string>
         <string name="owner">user:system:su</string>

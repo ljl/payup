@@ -22,7 +22,7 @@
                         document.getElementById('payment-result').innerHTML = e.target.response;
                     }
                     if (xhr.status === 500) {
-                        document.getElementById('payment-result').innerHTML = "Backend server error";
+                        document.getElementById('payment-result').innerHTML = "An error occured. Please try again";
                     }
                 }
                 refreshCart();
@@ -33,9 +33,9 @@
     Stripe.setPublishableKey(publishableKey);
     var paymentForm = document.getElementById('payment-form');
     paymentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
         Stripe.card.createToken(paymentForm, stripeResponseHandler);
         document.getElementById('payment-result').innerHTML = 'Paying up! Hold on...'
-        event.preventDefault();
     });
 </script>
 <div class="payup-checkout-wrapper">
