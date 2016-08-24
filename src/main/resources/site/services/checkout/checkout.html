@@ -6,27 +6,28 @@
 
     function stripeResponseHandler(status, response) {
         if (status != 200) {
-            document.getElementById('payment-result').innerHTML = response;
+            console.error(response);
+            document.getElementById('payment-result').innerHTML = response.error.message;
         } else {
             var paymentForm = document.getElementById('payment-form');
-            var formData = new FormData(paymentForm);
-            formData.append('token', response.id);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', completeCheckoutUrl, true);
-            xhr.send(formData);
-            xhr.onreadystatechange = function (e) {
-                var DONE = 4;
-                if (xhr.readyState === DONE) {
-                    if (xhr.status === 200) {
-                        document.querySelector('.payup-payment').style = "display:none;";
-                        document.getElementById('payment-result').innerHTML = e.target.response;
-                    }
-                    if (xhr.status === 500) {
-                        document.getElementById('payment-result').innerHTML = "An error occured. Please try again";
-                    }
+            var formData = $(paymentForm).serializeArray();
+            formData.push({name: "token", value: response.id});
+            $.ajax({
+                type: "POST",
+                url: completeCheckoutUrl,
+                data: $.param(formData),
+                success: function(data) {
+                    $('.payup-payment').hide();
+                    $('#payment-result').html(data);
+                },
+                error: function(data) {
+                    console.error(data);
+                    $('#payment-result').html("An error occured. Please try again");
+                },
+                complete: function(data) {
+                    refreshCart();
                 }
-                refreshCart();
-            };
+            });
         }
     }
 

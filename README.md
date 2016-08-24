@@ -19,6 +19,10 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
+### [1.0.5] - 2016-08-24
+#### Added
+- Improved error handling when using wrong card input
+
 ### [1.0.4] - 2016-08-19
 #### Removed
 - Customer carts have been temporary disabled due to some inconsistent errors.
