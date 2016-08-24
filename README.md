@@ -57,6 +57,7 @@ attempt. The second attempt stores the address and completes the payment
 
 ##Roadmap
 
+- ~~Use only session for carts~~
 - Validation of checkout form
 - Registration and login of customers
 - Toggle shipping option in site config
@@ -71,6 +72,5 @@ attempt. The second attempt stores the address and completes the payment
 - Customer pages with order history
 - Selenium testing
 - Modularize payment, add more providers
-- Use only session for carts
 - Sort out permissions for carts and customers
 - Close checkout by clicking outside
