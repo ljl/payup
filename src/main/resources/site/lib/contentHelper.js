@@ -81,20 +81,23 @@ function modifyContent(params) {
     if (!params.id) throw "Cannot create content. Missing parameter: id";
     if (!params.editor) throw "Cannot create content. Missing parameter: editor";
     var branch = contextLib.get().branch;
-    return contextLib.run({
+    var modifiedContent;
+    contextLib.run({
         branch: 'draft',
         user: {
             login: 'su',
             userStore: 'system'
         }
     }, function () {
-        var c = contentLib.modify({
+        modifiedContent = contentLib.modify({
             key: params.id,
             editor: params.editor,
             branch: 'draft'
         });
-        publish(c._id, branch);
+
+        publish(modifiedContent._id, branch);
     });
+    return modifiedContent;
 }
 
 function contentCount(params) {

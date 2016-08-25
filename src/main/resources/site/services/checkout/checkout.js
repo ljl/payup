@@ -88,17 +88,12 @@ function getShippingDetails(customer) {
 function getAddress(customer, data) {
     var shippingAddress = {};
     if (customer) {
-        var updatedCustomer = customerLib.updateAddress(customer, data);
-        shippingAddress.name = updatedCustomer.data.name;
-        shippingAddress.address = updatedCustomer.data.address;
-        shippingAddress.zip = updatedCustomer.data.zip;
-        shippingAddress.city = updatedCustomer.data.city;
-    } else {
-        shippingAddress.name = data.name;
-        shippingAddress.address = data.address;
-        shippingAddress.zip = data.zip;
-        shippingAddress.city = data.city;
+        customerLib.updateAddress(customer, data);
     }
+    shippingAddress.name = data.name;
+    shippingAddress.address = data.address;
+    shippingAddress.zip = data.zip;
+    shippingAddress.city = data.city;
 
     return shippingAddress;
 }

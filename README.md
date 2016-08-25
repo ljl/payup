@@ -19,6 +19,10 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
+### [1.0.6] - 2016-08-24
+#### Fixed
+- Fixed an error when changing a stored address
+
 ### [1.0.5] - 2016-08-24
 #### Added
 - Improved error handling when using wrong card input
@@ -51,9 +55,6 @@ When a order is complete, it can be viewed in admin with shipping details and co
 - Cart connection from Order
 - Stripe API-keys from import
 
-##Known issues
-- Changing a stored address gives payment error on the first payment 
-attempt. The second attempt stores the address and completes the payment
 
 ##Roadmap
 
