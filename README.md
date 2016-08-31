@@ -20,6 +20,9 @@ When a order is complete, it can be viewed in admin with shipping details and co
 
 ##Changelog
 ### [Unreleased]
+#### Fixed
+- Fixed site to be invalid on first import
+
 #### Removed
 - Removed unused cart import
 
