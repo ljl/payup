@@ -19,7 +19,7 @@ Test cards can be located here: https://stripe.com/docs/testing
 When a order is complete, it can be viewed in admin with shipping details and completion status.
 
 ##Changelog
-### [Unreleased]
+### [1.0.7] - 2016-08-31
 #### Fixed
 - Fixed site to be invalid on first import
 
