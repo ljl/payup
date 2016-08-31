@@ -50,8 +50,8 @@
             <property-set name="siteConfig">
                 <string name="applicationKey">no.iskald.payup</string>
                 <property-set name="config">
-                    <string name="publishableKey"></string>
-                    <string name="secretKey"></string>
+                    <string isNull="true" name="publishableKey" />
+                    <string isNull="true" name="secretKey" />
                     <string name="currency">nok</string>
                 </property-set>
             </property-set>
