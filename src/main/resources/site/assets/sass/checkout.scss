@@ -13,6 +13,8 @@
 }
 
 .payup-checkout-wrapper {
+  position: relative;
+  overflow: hidden;
   table {
     width: 100%;
   }
@@ -21,6 +23,17 @@
     .value {
       text-transform: uppercase;
     }
+  }
+  .cart-tab {
+    width:100%;
+    display: inline-block;
+  }
+  .cart-summary {
+    position:relative;
+  }
+  .payup-payment {
+    right: -100%;
+    position:relative;
   }
   #payment-form {
     width: 300px;
