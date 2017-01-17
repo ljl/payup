@@ -1,4 +1,4 @@
-# PayUp!
+# PayUp! [![Build Status][travis-image]][travis-url]
 
 A simple e-commerce store for Enonic XP.
 
@@ -82,3 +82,6 @@ When a order is complete, it can be viewed in admin with shipping details and co
 - Modularize payment, add more providers
 - Sort out permissions for carts and customers
 - Close checkout by clicking outside
+
+[travis-image]: https://travis-ci.org/ljl/payup.svg?branch=master
+[travis-url]: https://travis-ci.org/ljl/payup
