@@ -4,6 +4,7 @@
     "repo": "maven",
     "subject": "ljl",
     "desc": "I was pushed completely automatically",
+    "publications": ["mavenJava"],
     "website_url": "https://github.com/ljl/payup",
     "issue_tracker_url": "https://github.com/ljl/payup/issues",
     "vcs_url": "https://github.com/ljl/payup.git",
