@@ -24,7 +24,7 @@
   },
 
   "files": [
-    { "includePattern": "build/libs", "uploadPattern": "/$1" }
+    { "includePattern": "build/libs/(.*)", "uploadPattern": "/no/iskald/store/1.0.8/$1" }
   ],
 
   "publish": true
