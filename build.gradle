@@ -21,21 +21,21 @@ apply plugin: 'com.jfrog.bintray'
 app {
     name = project.appName
     displayName = project.displayName
-    vendorName = 'Enonic USA'
-    vendorUrl = 'https://enonic.com'
+    vendorName = 'Iskald'
+    vendorUrl = 'http://iskald.no'
 }
 
 dependencies {
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
-    include "com.enonic.xp:lib-content:${xpVersion}"
-    include "com.enonic.xp:lib-portal:${xpVersion}"
-    include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
-    include "com.enonic.xp:lib-xslt:${xpVersion}"
-    include "com.enonic.xp:lib-auth:${xpVersion}"
-    include "com.enonic.xp:lib-context:${xpVersion}"
-    include "com.enonic.xp:lib-i18n:${xpVersion}"
-    include "com.stripe:stripe-java:2.5.0"
+    compile "com.enonic.xp:lib-content:${xpVersion}"
+    compile "com.enonic.xp:lib-portal:${xpVersion}"
+    compile "com.enonic.xp:lib-thymeleaf:${xpVersion}"
+    compile "com.enonic.xp:lib-xslt:${xpVersion}"
+    compile "com.enonic.xp:lib-auth:${xpVersion}"
+    compile "com.enonic.xp:lib-context:${xpVersion}"
+    compile "com.enonic.xp:lib-i18n:${xpVersion}"
+    compile "com.stripe:stripe-java:2.5.0"
 }
 
 repositories {
@@ -94,4 +94,14 @@ bintray {
             vcsTag = "v$project.version"
         }
     }
+}
+
+task createPom << {
+    pom {
+        project {
+            groupId project.group
+            artifactId 'payup'
+            version project.version
+        }
+    }.writeTo("pom.xml")
 }
