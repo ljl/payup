@@ -103,5 +103,5 @@ task createPom << {
             artifactId 'payup'
             version project.version
         }
-    }.writeTo("pom.xml")
+    }.writeTo("build/libs/pom.xml")
 }
