@@ -73,35 +73,3 @@ publishing {
         }
     }
 }
-
-bintray {
-    user = bintrayUser
-    key = bintrayKey
-    publications = ['mavenJava']
-
-    pkg {
-        repo = 'maven'
-        name = 'payup'
-        desc = 'A simple e-commerce store for Enonic XP.'
-        websiteUrl = 'https://github.com/ljl/payup'
-        issueTrackerUrl = 'https://github.com/ljl/payup/issues'
-        vcsUrl = 'https://github.com/ljl/payup.git'
-        licenses = ['Apache-2.0']
-        labels = ['java', 'enonic', 'javascript']
-        publicDownloadNumbers = true
-
-        version {
-            vcsTag = "v$project.version"
-        }
-    }
-}
-
-task createPom << {
-    pom {
-        project {
-            groupId project.group
-            artifactId 'payup'
-            version project.version
-        }
-    }.writeTo("build/libs/pom.xml")
-}
